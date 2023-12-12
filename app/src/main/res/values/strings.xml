@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EventBookingApp</string>
+    <string name="explore_upcoming_and_nearby_events">Explore Upcoming and Nearby Events</string>
+    <string name="in_publishing_and_graphic_design_lorem">In publishing and graphic design, Lorem is a placeholder text commonly</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp
+package com.rashidsaleem.eventbookingapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rashidsaleem.eventbookingapp.ui.theme.EventBookingAppTheme
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
