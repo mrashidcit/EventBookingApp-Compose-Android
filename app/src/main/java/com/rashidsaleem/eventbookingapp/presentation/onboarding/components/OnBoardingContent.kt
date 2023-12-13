@@ -49,8 +49,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 @Composable
 fun OnBoardingContent(
     uiState: OnboardingUiState,
-    onEvent :(OnboardingEvent) -> Unit,
-    ) {
+    onEvent: (OnboardingEvent) -> Unit,
+) {
 
     Column(
         modifier = Modifier
@@ -128,7 +128,7 @@ fun OnBoardingContent(
             ) {
                 Text(
                     modifier = Modifier
-                        .clickable (
+                        .clickable(
                             enabled = uiState.shouldEnableSkipButton()
                         ) {
                             onEvent.invoke(OnboardingEvent.Skip)
@@ -152,7 +152,12 @@ fun OnBoardingContent(
                         modifier = Modifier
                             .size(8.dp)
                             .background(
-                                color = Color.White,
+                                color = Color.White.copy(
+                                    if (uiState.currentIndex == 0)
+                                        1f
+                                    else
+                                        0.20f
+                                ),
                                 shape = CircleShape
                             )
                     )
@@ -161,7 +166,12 @@ fun OnBoardingContent(
                         modifier = Modifier
                             .size(8.dp)
                             .background(
-                                color = Color.White.copy(0.20f),
+                                color = Color.White.copy(
+                                    if (uiState.currentIndex == 1)
+                                        1f
+                                    else
+                                        0.20f
+                                ),
                                 shape = CircleShape
                             )
                     )
@@ -170,7 +180,12 @@ fun OnBoardingContent(
                         modifier = Modifier
                             .size(8.dp)
                             .background(
-                                color = Color.White.copy(0.20f),
+                                color = Color.White.copy(
+                                    if (uiState.currentIndex == 2)
+                                        1f
+                                    else
+                                        0.20f
+                                ),
                                 shape = CircleShape
                             )
                     )

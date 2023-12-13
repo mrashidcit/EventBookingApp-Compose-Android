@@ -10,19 +10,44 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
+import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
+import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+            val navController = rememberNavController()
+
             EventBookingAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                NavHost(
+                    navController = navController,
+                    startDestination = Routes.splash,
                 ) {
-                    Greeting("Android")
+                    composable(Routes.splash) {
+                        SplashScreen(
+                            navigateNext = { route ->
+                                navController.navigate(route)
+                            }
+                        )
+                    }
+                    composable(Routes.onboarding) {
+                        OnBoardingScreen(
+                            navigateNext = { route ->
+                                navController.navigate(route)
+                            },
+                        )
+                    }
+                    composable(Routes.signIn) {
+                        SignInScreen()
+                    }
                 }
             }
         }

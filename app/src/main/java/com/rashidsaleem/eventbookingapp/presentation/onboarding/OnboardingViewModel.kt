@@ -2,6 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rashidsaleem.eventbookingapp.common.Routes
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,7 +29,7 @@ class OnboardingViewModel: ViewModel() {
     }
 
     private fun skip() = viewModelScope.launch {
-        _eventFlow.emit(UiEvent.NavigateNext("route"))
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.signIn))
     }
 
     private fun next() = viewModelScope.launch {
@@ -40,7 +41,7 @@ class OnboardingViewModel: ViewModel() {
                 )
             }
         } else {
-            _eventFlow.emit(UiEvent.NavigateNext("route"))
+            _eventFlow.emit(UiEvent.NavigateNext(Routes.signIn))
         }
     }
 
