@@ -6,4 +6,13 @@
     <string name="next">Next</string>
     <string name="web_have_modern_events_calendar_feature">Web Have Modern Events Calendar Feature</string>
     <string name="too_look_up_more_events_or_activities_nearby_by_map">Too Look Up More Events or Activities Nearby By Map</string>
+    <string name="eventhub">EventHub</string>
+    <string name="signin">Sign in</string>
+    <string name="rememberMe">Remember Me</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="or">or</string>
+    <string name="loginWithGoogle">Login with Google</string>
+    <string name="loginWithFacebook">Login with Facebook</string>
+    <string name="dontHaveAnAccount">Don\'t have an account?</string>
+    <string name="signUp">Sign up</string>
 </resources>
