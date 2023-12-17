@@ -1,6 +1,7 @@
 package com.rashidsaleem.eventbookingapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,12 +15,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
 import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
 import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 class MainActivity : ComponentActivity() {
+    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -30,6 +34,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController,
                     startDestination = Routes.splash,
+//                    startDestination = Routes.onboarding,
                 ) {
                     composable(Routes.splash) {
                         SplashScreen(
@@ -41,13 +46,22 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.onboarding) {
                         OnBoardingScreen(
                             navigateNext = { route ->
+                                Log.d(TAG, "OnBoardingScreen - navigateNext: $route")
                                 navController.navigate(route)
                             },
                         )
                     }
                     composable(Routes.signIn) {
-                        SignInScreen()
+                        SignInScreen(
+                            navigateNext = { route ->
+                                navController.navigate(route)
+                            }
+                        )
                     }
+                    composable(Routes.home) {
+                        HomeScreen()
+                    }
+
                 }
             }
         }
