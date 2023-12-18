@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp.presentation.signIn.components
+package com.rashidsaleem.eventbookingapp.presentation.signUp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,6 +30,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,8 +48,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInEvent
-import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInUiState
+import com.rashidsaleem.eventbookingapp.presentation.common.components.AppCircularProgressIndicator
+import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpEvent
+import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpUiState
+import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpViewModel
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
@@ -61,9 +65,9 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInContent(
-    uiState: SignInUiState,
-    onEvent: (SignInEvent) -> Unit,
+fun SignUpContent(
+    uiState: SignUpUiState,
+    onEvent: (SignUpEvent) -> Unit,
 ) {
     val buttonsHorizontalPadding = remember {
         16.dp
@@ -77,7 +81,10 @@ fun SignInContent(
     ) {
 
 
-        val (contentContainer, topRightCircle, bottomLeftCircle, bottomRightCircle) = createRefs()
+        val (
+            topAppBar, contentContainer, topRightCircle,
+            bottomLeftCircle, bottomRightCircle,
+            ) = createRefs()
 
         // Blue box for testing
 //        Box(modifier = Modifier
@@ -142,10 +149,28 @@ fun SignInContent(
             contentDescription = null
         )
 
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 16.dp)
+                .constrainAs(topAppBar) {
+                    top.linkTo(parent.top)
+                }
+        ) {
+            Icon(
+                modifier = Modifier.size(24.dp)
+                    .clickable {
+                       onEvent(SignUpEvent.BackButtonOnClick)
+                    },
+                painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+                contentDescription = null,
+                )
+        }
+
         Column(
             modifier = Modifier
                 .constrainAs(contentContainer) {
-                    top.linkTo(parent.top)
+                    top.linkTo(topAppBar.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
@@ -154,20 +179,6 @@ fun SignInContent(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Image(
-                modifier = Modifier.size(55.dp),
-                painter = painterResource(id = R.drawable.app_logo),
-                contentDescription = null,
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = stringResource(id = R.string.eventhub),
-                fontSize = 35.sp,
-                fontFamily = airbnbCerealFontFamily,
-                fontWeight = FontWeight.Medium,
-                color = Black1,
-            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -178,10 +189,37 @@ fun SignInContent(
                 color = Black2,
             )
             Spacer(modifier = Modifier.height(10.dp))
+            // Full Name
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = uiState.fullName,
+                onValueChange = { onEvent(SignUpEvent.UpdateFullNameValue(it)) },
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.full_name),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Gray1,
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier.size(22.dp),
+                        painter = painterResource(id = R.drawable.ic_person),
+                        contentDescription = null,
+                        tint = Gray3,
+                    )
+                },
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Gray2
+                )
+            )
+            Spacer(modifier = Modifier.height(14.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = uiState.email,
-                onValueChange = { onEvent(SignInEvent.UpdateEmailValue(it)) },
+                onValueChange = { onEvent(SignUpEvent.UpdateEmailValue(it)) },
                 placeholder = {
                     Text(
                         text = "abc@email.com",
@@ -207,7 +245,7 @@ fun SignInContent(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = uiState.password,
-                onValueChange = { onEvent(SignInEvent.UpdatePasswordValue(it)) },
+                onValueChange = { onEvent(SignUpEvent.UpdatePasswordValue(it)) },
                 visualTransformation = if (uiState.passwordVisibility)
                     VisualTransformation.None
                 else
@@ -234,7 +272,7 @@ fun SignInContent(
                             .size(22.dp)
                             .clickable {
                                 onEvent(
-                                    SignInEvent.UpdatePasswordVisibility(
+                                    SignUpEvent.UpdatePasswordVisibility(
                                         !uiState.passwordVisibility
                                     )
                                 )
@@ -255,6 +293,59 @@ fun SignInContent(
                     unfocusedBorderColor = Gray2
                 )
             )
+            Spacer(modifier = Modifier.height(14.dp))
+            // Confirm Password
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = uiState.confirmPassword,
+                onValueChange = { onEvent(SignUpEvent.UpdateConfirmPasswordValue(it)) },
+                visualTransformation = if (uiState.confirmPasswordVisibility)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation(),
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.confirm_password),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Gray1,
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier.size(22.dp),
+                        painter = painterResource(id = R.drawable.ic_lock),
+                        contentDescription = null,
+                        tint = Gray3,
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .size(22.dp)
+                            .clickable {
+                                onEvent(
+                                    SignUpEvent.UpdateConfirmPasswordVisibility(
+                                        !uiState.confirmPasswordVisibility
+                                    )
+                                )
+                            },
+                        painter = painterResource(
+                            id =
+                            if (!uiState.confirmPasswordVisibility)
+                                R.drawable.ic_eye_visibility_off
+                            else
+                                R.drawable.baseline_visibility_24
+                        ),
+                        contentDescription = null,
+                        tint = Gray3,
+                    )
+                },
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Gray2
+                )
+            )
             Spacer(modifier = Modifier.height(12.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -262,7 +353,7 @@ fun SignInContent(
             ) {
                 Switch(
                     checked = uiState.rememberMeCheck,
-                    onCheckedChange = { onEvent(SignInEvent.UpdateRememberMeCheck(it)) },
+                    onCheckedChange = { onEvent(SignUpEvent.UpdateRememberMeCheck(it)) },
                     colors = SwitchDefaults.colors(
                         checkedTrackColor = Blue,
                     ),
@@ -293,7 +384,7 @@ fun SignInContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = buttonsHorizontalPadding),
-                onClick = { onEvent(SignInEvent.SignInOnClick) },
+                onClick = { onEvent(SignUpEvent.SignUpOnClick) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Blue
                 ),
@@ -308,7 +399,7 @@ fun SignInContent(
                 ) {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = stringResource(id = R.string.signin).uppercase(),
+                        text = stringResource(id = R.string.signUp).uppercase(),
                         fontFamily = airbnbCerealFontFamily,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
@@ -421,7 +512,7 @@ fun SignInContent(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = stringResource(id = R.string.dontHaveAnAccount),
+                    text = stringResource(id = R.string.alreadyHaveAnAccount),
                     fontFamily = airbnbCerealFontFamily,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
@@ -430,8 +521,8 @@ fun SignInContent(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    modifier = Modifier.clickable { onEvent(SignInEvent.SignUpOnClick) },
-                    text = stringResource(id = R.string.signUp),
+                    modifier = Modifier.clickable { onEvent(SignUpEvent.SignInOnClick) },
+                    text = stringResource(id = R.string.signin),
                     fontFamily = airbnbCerealFontFamily,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
@@ -440,42 +531,33 @@ fun SignInContent(
                 )
 
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(36.dp))
         }
 
         // Loader Container
         if (uiState.isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Black.copy(0.50f))
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(60.dp)
-                        .align(Alignment.Center)
-                )
-            }
+            AppCircularProgressIndicator()
         }
 
     }
 }
+
 
 @Preview
 @Composable
-fun SignInContentPreview() {
-
-    val uiState = remember {
-        SignInUiState()
-    }
-
+fun SignUpContentPreview() {
     EventBookingAppTheme {
-        Surface {
-            SignInContent(
-                uiState = uiState,
-                onEvent =  {}
+
+        val uiState by remember {
+            mutableStateOf(
+                SignUpUiState()
             )
         }
-    }
 
+        Surface {
+            SignUpContent(uiState = uiState, onEvent = {})
+        }
+    }
 }
+
+

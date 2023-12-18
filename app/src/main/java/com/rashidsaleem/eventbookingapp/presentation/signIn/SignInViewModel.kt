@@ -34,8 +34,8 @@ class SignInViewModel: ViewModel() {
         }
     }
 
-    private fun signUpOnClick() {
-        TODO("Not yet implemented")
+    private fun signUpOnClick() = viewModelScope.launch {
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.signUp))
     }
 
     private fun signInWithGoogleOnClick() {

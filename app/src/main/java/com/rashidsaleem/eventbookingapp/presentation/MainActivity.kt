@@ -15,9 +15,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
 import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
+import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpScreen
 import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
@@ -33,8 +35,8 @@ class MainActivity : ComponentActivity() {
             EventBookingAppTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.splash,
-//                    startDestination = Routes.onboarding,
+//                    startDestination = Routes.splash,
+                    startDestination = Routes.signIn,
                 ) {
                     composable(Routes.splash) {
                         SplashScreen(
@@ -58,9 +60,32 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+                    composable(Routes.signUp) {
+                        SignUpScreen(
+                            navigateNext = { route ->
+                                navController.navigate(route)
+                            },
+                            navigateBack = { route ->
+                                if (route.isNotEmpty()) {
+                                    navController.popBackStack(
+                                        route = route,
+                                        inclusive = false,
+                                    )
+                                } else {
+                                    navController.popBackStack()
+                                }
+                            }
+                        )
+                    }
+
                     composable(Routes.home) {
                         HomeScreen()
                     }
+                    composable(Routes.codeVerification) {
+                        CodeVerificationScreen()
+                    }
+
+
 
                 }
             }
