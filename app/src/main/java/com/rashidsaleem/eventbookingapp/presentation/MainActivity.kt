@@ -82,7 +82,10 @@ class MainActivity : ComponentActivity() {
                         HomeScreen()
                     }
                     composable(Routes.codeVerification) {
-                        CodeVerificationScreen()
+                        CodeVerificationScreen(
+                            navigateNext = {},
+                            navigateBack = {},
+                        )
                     }
 
 

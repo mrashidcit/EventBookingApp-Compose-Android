@@ -79,15 +79,6 @@ fun SignInContent(
 
         val (contentContainer, topRightCircle, bottomLeftCircle, bottomRightCircle) = createRefs()
 
-        // Blue box for testing
-//        Box(modifier = Modifier
-//            .fillMaxWidth()
-//            .height(100.dp)
-//            .background(color = Blue)
-//        ) {
-//
-//        }
-
         // Top-Right Circle
         Image(
             modifier = Modifier
@@ -98,16 +89,6 @@ fun SignInContent(
             painter = painterResource(id = R.drawable.img_top_right_background_circle),
             contentDescription = null
         )
-
-        // Yellow Box for Testing
-//        Box(modifier = Modifier
-//            .padding(top = 50.dp)
-//            .fillMaxWidth()
-//            .height(100.dp)
-//            .background(color = Yellow)
-//        ) {
-//
-//        }
 
         // Center-Right Circle
         Image(
