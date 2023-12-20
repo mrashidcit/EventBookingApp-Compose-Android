@@ -71,12 +71,13 @@ fun CodeVerificationScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(key1 = true) {
+
+        viewModel.onEvent(CodeVerificationEvent.SendVerificationCodeFirstTime)
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is CodeVerificationViewModel.UiEvent.NavigateNext -> navigateNext(event.route)
                 CodeVerificationViewModel.UiEvent.NavigateBack -> navigateBack()
             }
-
         }
     }
 

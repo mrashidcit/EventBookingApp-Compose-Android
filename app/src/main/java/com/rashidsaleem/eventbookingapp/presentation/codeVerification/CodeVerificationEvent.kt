@@ -8,4 +8,5 @@ sealed class CodeVerificationEvent {
     object NavigateBack: CodeVerificationEvent()
     object ContinueButtonOnClick: CodeVerificationEvent()
     object SendVerificationCode: CodeVerificationEvent()
+    object SendVerificationCodeFirstTime: CodeVerificationEvent()
 }

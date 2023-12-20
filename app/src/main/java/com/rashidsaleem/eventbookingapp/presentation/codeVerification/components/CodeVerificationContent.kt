@@ -30,14 +30,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,7 +62,7 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CodeVerificationContent(
     uiState: CodeVerificationUiState,
@@ -88,7 +91,7 @@ fun CodeVerificationContent(
         val textField4FocusRequester = remember {
             FocusRequester()
         }
-
+        val keyboardController = LocalSoftwareKeyboardController.current
 
 
         ConstraintLayout(
@@ -147,7 +150,7 @@ fun CodeVerificationContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                    .padding(vertical = 16.dp, horizontal = 24.dp)
                     .constrainAs(topAppBar) {
                         top.linkTo(parent.top)
                     }
@@ -172,7 +175,7 @@ fun CodeVerificationContent(
                         bottom.linkTo(parent.bottom)
                         height = Dimension.fillToConstraints
                     }
-                    .padding(16.dp)
+                    .padding(horizontal = 24.dp, vertical = 16.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -192,15 +195,15 @@ fun CodeVerificationContent(
                             uiState.phoneNo,
                     fontSize = 24.sp,
                     fontFamily = airbnbCerealFontFamily,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Normal,
                     color = Black2,
+                    lineHeight = 25.sp,
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     VerificationCodeOutlinedTextField(
@@ -236,7 +239,8 @@ fun CodeVerificationContent(
                         onValueChange = { value ->
                             onEvent(CodeVerificationEvent.UpdateCodeValue4(value))
                             if (value.isNotEmpty())
-                                textField4FocusRequester.freeFocus()
+                                keyboardController?.hide()
+//                                textField4FocusRequester.freeFocus()
                         }
                     )
                 }
@@ -308,7 +312,7 @@ fun CodeVerificationContent(
                         Text(
                             modifier = Modifier
                                 .clickable {
-                                   onEvent(CodeVerificationEvent.SendVerificationCode)
+                                    onEvent(CodeVerificationEvent.SendVerificationCode)
                                 }
                                 .padding(4.dp),
                             text = "Re-send Code",
@@ -349,6 +353,7 @@ fun CodeVerificationContent(
 private fun VerificationCodeOutlinedTextField(
     value: String,
     focusRequester: FocusRequester,
+    maxLength: Int = 1,
     onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
@@ -356,7 +361,9 @@ private fun VerificationCodeOutlinedTextField(
             .focusRequester(focusRequester)
             .width(60.dp),
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {
+            if (it.length <= maxLength) onValueChange(it)
+        } ,
         placeholder = {
             Text(
                 modifier = Modifier
@@ -375,7 +382,10 @@ private fun VerificationCodeOutlinedTextField(
         shape = RoundedCornerShape(12.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = Gray2
-        )
+        ),
+
+        maxLines = 1,
+        singleLine = true
     )
 }
 

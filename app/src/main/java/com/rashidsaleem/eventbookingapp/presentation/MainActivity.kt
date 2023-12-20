@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.rashidsaleem.eventbookingapp.common.Routes
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
@@ -35,8 +36,8 @@ class MainActivity : ComponentActivity() {
             EventBookingAppTheme {
                 NavHost(
                     navController = navController,
-//                    startDestination = Routes.splash,
-                    startDestination = Routes.signIn,
+                    startDestination = Routes.splash,
+//                    startDestination = Routes.codeVerification,
                 ) {
                     composable(Routes.splash) {
                         SplashScreen(
@@ -83,11 +84,18 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.codeVerification) {
                         CodeVerificationScreen(
-                            navigateNext = {},
-                            navigateBack = {},
+                            navigateNext = { route ->
+                                navController.navigate(route) {
+                                    popUpTo(Routes.codeVerification) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
+                            navigateBack = {
+                                navController.popBackStack()
+                            },
                         )
                     }
-
 
 
                 }

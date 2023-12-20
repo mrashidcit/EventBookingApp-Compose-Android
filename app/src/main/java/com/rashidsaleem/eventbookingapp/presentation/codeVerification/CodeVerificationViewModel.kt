@@ -2,6 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.codeVerification
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rashidsaleem.eventbookingapp.common.Routes
@@ -20,7 +21,7 @@ import kotlin.concurrent.timerTask
 
 class CodeVerificationViewModel: ViewModel() {
 
-
+    private val TAG = "CodeVerificationViewModel"
     private val _uiState: MutableStateFlow<CodeVerificationUiState> = MutableStateFlow(CodeVerificationUiState())
     val uiState: StateFlow<CodeVerificationUiState> = _uiState.asStateFlow()
 
@@ -29,9 +30,11 @@ class CodeVerificationViewModel: ViewModel() {
 
     private val scope = viewModelScope
     private var _verificationCodeTimer: Timer? = null
+    private var _sendVerificationCodeFirstTime: Boolean = false
+    private val _verificationCodeDurationSeconds = 60
 
     init {
-        sendVerificationCode()
+//        sendVerificationCode()
 
     }
 
@@ -44,6 +47,14 @@ class CodeVerificationViewModel: ViewModel() {
             CodeVerificationEvent.NavigateBack -> navigateBack()
             CodeVerificationEvent.ContinueButtonOnClick -> continueButtonOnClick()
             CodeVerificationEvent.SendVerificationCode -> sendVerificationCode()
+            CodeVerificationEvent.SendVerificationCodeFirstTime -> sendVerificationCodeFirstTime()
+        }
+    }
+
+    private fun sendVerificationCodeFirstTime() {
+        if (!_sendVerificationCodeFirstTime) {
+            sendVerificationCode()
+            _sendVerificationCodeFirstTime = true
         }
     }
 
@@ -53,14 +64,22 @@ class CodeVerificationViewModel: ViewModel() {
             _verificationCodeTimer?.cancel()
             _verificationCodeTimer = null
         }
-        updateTimerSeconds(60)
-        _verificationCodeTimer = timer(initialDelay = 17L, period = 1000L ) {
-            updateTimerSeconds(_uiState.value.timerSeconds, -1)
+//        updateTimerSeconds(60)
+        updateTimerSeconds(_verificationCodeDurationSeconds)
+        _verificationCodeTimer = timer(period = 1000L ) {
+            _uiState.value.timerSeconds.let {timerSeconds ->
+                if (timerSeconds <= 0) {
+                    this.cancel()
+                    _verificationCodeTimer = null
+                }
+                updateTimerSeconds(timerSeconds, 1)
+            }
         }
 
     }
 
     private fun updateTimerSeconds(value: Int, decrementValue: Int = 0) {
+        Log.d(TAG, "updateTimerSeconds: value >> $value")
         _uiState.update {
             it.copy(
                 timerSeconds = value - decrementValue
