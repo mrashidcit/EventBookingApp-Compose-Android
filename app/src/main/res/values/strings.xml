@@ -23,4 +23,6 @@
     <string name="we_have_send_you_the_verification_code_on">We\'ve send you the verification \ncode on</string>
     <string name="continue_">Continue</string>
     <string name="resend_code_in">Re-send code in</string>
+    <string name="resetPassword">Reset Password</string>
+    <string name="please_enter_you_email_address_to_request_a_password_reset">Please enter you email address to request a password reset</string>
 </resources>

@@ -182,7 +182,7 @@ fun SignUpContent(
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.signin),
+                text = stringResource(id = R.string.signUp),
                 fontSize = 24.sp,
                 fontFamily = airbnbCerealFontFamily,
                 fontWeight = FontWeight.Medium,
