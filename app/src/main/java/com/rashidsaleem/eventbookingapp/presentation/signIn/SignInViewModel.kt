@@ -31,7 +31,12 @@ class SignInViewModel: ViewModel() {
             SignInEvent.SignInWithFacebookOnClick -> signInWithFaebookOnClick()
             SignInEvent.SignInWithGoogleOnClick -> signInWithGoogleOnClick()
             SignInEvent.SignUpOnClick -> signUpOnClick()
+            is SignInEvent.NavigateNext -> navigateNext(event.route)
         }
+    }
+
+    private fun navigateNext(route: String) = viewModelScope.launch {
+        _eventFlow.emit(UiEvent.NavigateNext(route))
     }
 
     private fun signUpOnClick() = viewModelScope.launch {

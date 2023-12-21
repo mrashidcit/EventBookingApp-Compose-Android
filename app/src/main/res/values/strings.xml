@@ -25,4 +25,5 @@
     <string name="resend_code_in">Re-send code in</string>
     <string name="resetPassword">Reset Password</string>
     <string name="please_enter_you_email_address_to_request_a_password_reset">Please enter you email address to request a password reset</string>
+    <string name="send">Send</string>
 </resources>

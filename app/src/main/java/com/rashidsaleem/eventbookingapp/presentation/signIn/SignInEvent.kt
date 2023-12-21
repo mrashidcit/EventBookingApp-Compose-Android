@@ -9,5 +9,6 @@ sealed class SignInEvent {
     object SignInWithGoogleOnClick: SignInEvent()
     object SignInWithFacebookOnClick: SignInEvent()
     object SignUpOnClick: SignInEvent()
+    data class NavigateNext(val route: String): SignInEvent()
 
 }

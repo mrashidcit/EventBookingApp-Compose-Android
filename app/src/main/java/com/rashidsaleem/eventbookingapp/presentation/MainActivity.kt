@@ -19,6 +19,7 @@ import com.rashidsaleem.eventbookingapp.common.Routes
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
 import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
+import com.rashidsaleem.eventbookingapp.presentation.resetPassword.ResetPasswordScreen
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
 import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpScreen
 import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController,
                     startDestination = Routes.splash,
-//                    startDestination = Routes.codeVerification,
+//                    startDestination = Routes.resetPassword,
                 ) {
                     composable(Routes.splash) {
                         SplashScreen(
@@ -96,6 +97,23 @@ class MainActivity : ComponentActivity() {
                             },
                         )
                     }
+
+                    composable(Routes.resetPassword) {
+                        ResetPasswordScreen(
+                            navigateNext = { route ->
+                                navController.navigate(route) {
+                                    popUpTo(Routes.resetPassword) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
+                            navigateBack = {
+                                navController.popBackStack()
+                            },
+                        )
+                    }
+
+
 
 
                 }

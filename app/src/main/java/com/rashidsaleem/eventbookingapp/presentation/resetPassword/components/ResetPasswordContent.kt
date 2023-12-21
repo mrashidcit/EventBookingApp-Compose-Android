@@ -21,14 +21,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
@@ -37,14 +41,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.presentation.codeVerification.ResetPasswordEvent
-import com.rashidsaleem.eventbookingapp.presentation.codeVerification.components.VerificationCodeOutlinedTextField
-import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInEvent
+import com.rashidsaleem.eventbookingapp.presentation.common.BaseUiState
+import com.rashidsaleem.eventbookingapp.presentation.resetPassword.ResetPasswordEvent
+import com.rashidsaleem.eventbookingapp.presentation.resetPassword.ResetPasswordUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue1
@@ -54,10 +59,17 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray3
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ResetPasswordContent() {
+fun ResetPasswordContent(
+    baseUiState: BaseUiState,
+    uiState: ResetPasswordUiState,
+    onEvent: (ResetPasswordEvent) -> Unit,
+) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .background(color = Color.White),
+
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val buttonsHorizontalPadding = remember {
@@ -66,6 +78,8 @@ fun ResetPasswordContent() {
         val buttonsVerticalPadding = remember {
             4.dp
         }
+
+        val keyboardController = LocalSoftwareKeyboardController.current
 
 
         ConstraintLayout(
@@ -137,6 +151,7 @@ fun ResetPasswordContent() {
                         },
                     painter = painterResource(id = R.drawable.baseline_arrow_back_24),
                     contentDescription = null,
+                    tint = Color.Black,
                 )
             }
 
@@ -196,7 +211,8 @@ fun ResetPasswordContent() {
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        unfocusedBorderColor = Gray2
+                        unfocusedBorderColor = Gray2,
+                        textColor = Color.Black
                     )
                 )
                 Spacer(modifier = Modifier.height(36.dp))
@@ -205,7 +221,10 @@ fun ResetPasswordContent() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = buttonsHorizontalPadding),
-                    onClick = { onEvent(ResetPasswordEvent.ContinueButtonOnClick) },
+                    onClick = {
+                        keyboardController?.hide()
+                        onEvent(ResetPasswordEvent.SendButtonOnClick)
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Blue
                     ),
@@ -220,7 +239,7 @@ fun ResetPasswordContent() {
                     ) {
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = stringResource(id = R.string.continue_).uppercase(),
+                            text = stringResource(id = R.string.send).uppercase(),
                             fontFamily = airbnbCerealFontFamily,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
@@ -236,55 +255,56 @@ fun ResetPasswordContent() {
                                 modifier = Modifier.align(Alignment.Center),
                                 painter = painterResource(id = R.drawable.ic_arrow_right),
                                 contentDescription = null,
+                                tint = Color.White
                             )
                         }
                     }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Bottom,
-                ) {
-                    if (uiState.timerSeconds > 0) {
-                        Text(
-                            text = stringResource(id = R.string.resend_code_in),
-                            color = Black2,
-                            fontSize = 15.sp,
-                            fontFamily = airbnbCerealFontFamily,
-                            fontWeight = FontWeight.Normal,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "00:${uiState.getTimerSecondsForDisplay()}",
-                            color = Blue,
-                            fontSize = 15.sp,
-                            fontFamily = airbnbCerealFontFamily,
-                            fontWeight = FontWeight.Normal,
-                        )
-                    } else {
-                        Text(
-                            modifier = Modifier
-                                .clickable {
-                                    onEvent(ResetPasswordEvent.SendVerificationCode)
-                                }
-                                .padding(4.dp),
-                            text = "Re-send Code",
-                            color = Blue,
-                            fontSize = 15.sp,
-                            fontFamily = airbnbCerealFontFamily,
-                            fontWeight = FontWeight.Normal,
-                        )
-                    }
-
-
-                }
-                Spacer(modifier = Modifier.height(24.dp))
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.Center,
+//                    verticalAlignment = Alignment.Bottom,
+//                ) {
+//                    if (uiState.timerSeconds > 0) {
+//                        Text(
+//                            text = stringResource(id = R.string.resend_code_in),
+//                            color = Black2,
+//                            fontSize = 15.sp,
+//                            fontFamily = airbnbCerealFontFamily,
+//                            fontWeight = FontWeight.Normal,
+//                        )
+//                        Spacer(modifier = Modifier.width(8.dp))
+//                        Text(
+//                            text = "00:${uiState.getTimerSecondsForDisplay()}",
+//                            color = Blue,
+//                            fontSize = 15.sp,
+//                            fontFamily = airbnbCerealFontFamily,
+//                            fontWeight = FontWeight.Normal,
+//                        )
+//                    } else {
+//                        Text(
+//                            modifier = Modifier
+//                                .clickable {
+//                                    onEvent(ResetPasswordEvent.SendVerificationCode)
+//                                }
+//                                .padding(4.dp),
+//                            text = "Re-send Code",
+//                            color = Blue,
+//                            fontSize = 15.sp,
+//                            fontFamily = airbnbCerealFontFamily,
+//                            fontWeight = FontWeight.Normal,
+//                        )
+//                    }
+//
+//
+//                }
+//                Spacer(modifier = Modifier.height(24.dp))
 
             }
 
             // Loader Container
-            if (false) {
+            if (baseUiState.showLoader) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -302,11 +322,29 @@ fun ResetPasswordContent() {
     }
 }
 
+@Preview
 @Composable
 fun ResetPasswordContentPreview() {
+
+    val baseUiState by remember {
+        mutableStateOf(
+            BaseUiState()
+        )
+    }
+    val uiState by remember {
+        mutableStateOf(
+            ResetPasswordUiState()
+        )
+    }
+
+
     EventBookingAppTheme {
         Surface {
-            ResetPasswordContent()
+            ResetPasswordContent(
+                baseUiState = baseUiState,
+                uiState = uiState,
+                onEvent = {}
+            )
         }
     }
 }

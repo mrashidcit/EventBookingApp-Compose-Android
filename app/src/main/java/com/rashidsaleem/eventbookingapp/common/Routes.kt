@@ -7,5 +7,6 @@ object Routes {
     val signUp = "signUp"
     val home = "home"
     val codeVerification = "CodeVerification"
+    val resetPassword = "resetPassword"
 
 }
