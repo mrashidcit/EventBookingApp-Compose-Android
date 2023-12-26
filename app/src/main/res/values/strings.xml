@@ -26,4 +26,13 @@
     <string name="resetPassword">Reset Password</string>
     <string name="please_enter_you_email_address_to_request_a_password_reset">Please enter you email address to request a password reset</string>
     <string name="send">Send</string>
+    <string name="my_profile">My Profile</string>
+    <string name="message">Message</string>
+    <string name="calendar">Calendar</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="settings">Settings</string>
+    <string name="helps_and_faqs"><![CDATA[Helps & FAQs]]></string>
+    <string name="sign_out">Sign Out</string>
+    <string name="upgrade_pro">Upgrade Pro</string>
 </resources>
