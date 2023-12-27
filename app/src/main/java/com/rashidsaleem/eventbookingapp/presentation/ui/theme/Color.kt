@@ -3,11 +3,11 @@ package com.rashidsaleem.eventbookingapp.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Blue = Color(0xFF5669FF)
-val Cyan = Color(0xFF00F8FF)
+val Aqua = Color(0xFF00F8FF)
 val Blue2 = Color(0xFF7887FF)
 
 val BlueLight = Color(0xFF5669FF)
-val CyanLight = Color(0xFF00F8FF)
+val AquaLight = Color(0xFF00F8FF)
 val Blue2Light = Color(0xFF7887FF)
 
 //val Purple80 = Color(0xFFD0BCFF)
@@ -25,4 +25,3 @@ val Gray1 = Color(0xFF747688)
 val Gray2 = Color(0xFFE4DFDF)
 val Gray3 = Color(0xFF807A7A)
 val Gray4 = Color(0xFF9D9898)
-val Aqua = Color(0xFF00F8FF)
