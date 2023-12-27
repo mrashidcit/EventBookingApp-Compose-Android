@@ -35,4 +35,6 @@
     <string name="helps_and_faqs"><![CDATA[Helps & FAQs]]></string>
     <string name="sign_out">Sign Out</string>
     <string name="upgrade_pro">Upgrade Pro</string>
+    <string name="currentLocation">Current Location</string>
+    <string name="filters">Filters</string>
 </resources>
