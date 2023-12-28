@@ -41,4 +41,7 @@
     <string name="music">Music</string>
     <string name="food">Food</string>
     <string name="art">Art</string>
+    <string name="upcomingEvents">Upcoming Events</string>
+    <string name="hello">Hello</string>
+    <string name="seeAll">See All</string>
 </resources>

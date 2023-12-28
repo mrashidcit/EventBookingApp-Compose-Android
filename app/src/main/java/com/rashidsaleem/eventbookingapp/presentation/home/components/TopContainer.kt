@@ -1,6 +1,7 @@
 package com.rashidsaleem.eventbookingapp.presentation.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
+import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterContainer
+import com.rashidsaleem.eventbookingapp.presentation.home.HomeTopContainerEvent
+import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.AtomicTangerine
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue3
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue4
@@ -50,7 +54,9 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopContainer(
+    searchQuery: String,
     contentHoriztonalPadding: Dp = 24.dp,
+    onEvent: (HomeTopContainerEvent) -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier.fillMaxWidth()
@@ -84,7 +90,10 @@ fun TopContainer(
                 Icon(
                     modifier = Modifier
                         .width(24.dp)
-                        .height(29.2.dp),
+                        .height(29.2.dp)
+                        .clickable {
+                            onEvent(HomeTopContainerEvent.MenuIconClick)
+                        },
                     painter = painterResource(id = R.drawable.ic_menu),
                     contentDescription = null,
                     tint = Color.White,
@@ -94,6 +103,10 @@ fun TopContainer(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Row(
+                        modifier = Modifier
+                            .clickable {
+                                onEvent(HomeTopContainerEvent.CurrentLocationClick)
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -123,6 +136,9 @@ fun TopContainer(
                 Box(
                     modifier = Modifier
                         .size(36.dp)
+                        .clickable {
+                            onEvent(HomeTopContainerEvent.NotificationIconClick)
+                        }
                         .background(color = Color.White.copy(0.10f), shape = CircleShape)
                 ) {
                     Icon(
@@ -141,8 +157,10 @@ fun TopContainer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 0.dp),
-                value = "",
-                onValueChange = {},
+                value = searchQuery,
+                onValueChange = {
+                    onEvent(HomeTopContainerEvent.UpdateSearchFieldValue(it))
+                },
                 placeholder = {
                     Text(
                         text = "Search...",
@@ -163,7 +181,11 @@ fun TopContainer(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clickable {
+                                    onEvent(HomeTopContainerEvent.SearchIconClick)
+                                },
                             painter = painterResource(id = R.drawable.ic_search),
                             contentDescription = null,
                             tint = Color.White
@@ -178,35 +200,15 @@ fun TopContainer(
                     }
                 },
                 trailingIcon = {
-                    Row(
-                        modifier = Modifier
-                            .background(color = Blue6, shape = RoundedCornerShape(50.dp))
-                            .padding(4.dp)
-                            .padding(end = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(23.75.dp),
-                            painter = painterResource(id = R.drawable.ic_filter),
-                            contentDescription = null,
-                            tint = Blue5,
-                        )
-                        Spacer(Modifier.width(3.7.dp))
-                        Text(
-                            text = stringResource(id = R.string.filters),
-                            fontFamily = airbnbCerealFontFamily,
-                            fontSize = 12.03.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.White,
-                        )
+                    SearchFilterContainer() {
+                        onEvent(HomeTopContainerEvent.SearchFilterContainerClick)
                     }
                 }
             )
             Spacer(Modifier.height(26.dp))
         }
 
-        LazyRow (
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(horizontalItemsList) {
@@ -221,7 +223,10 @@ fun TopContainer(
                     icon = R.drawable.ic_sports,
                     stringResId = R.string.sports
                 ) {
-
+                    onEvent(
+                        HomeTopContainerEvent
+                            .HorizontalListItemClick(HorizontalItemEnum.Sports)
+                    )
                 }
             }
             item {
@@ -230,7 +235,10 @@ fun TopContainer(
                     stringResId = R.string.music,
                     containerColor = AtomicTangerine,
                 ) {
-
+                    onEvent(
+                        HomeTopContainerEvent
+                            .HorizontalListItemClick(HorizontalItemEnum.Music)
+                    )
                 }
             }
             item {
@@ -239,7 +247,10 @@ fun TopContainer(
                     stringResId = R.string.food,
                     containerColor = MountainMeadow
                 ) {
-
+                    onEvent(
+                        HomeTopContainerEvent
+                            .HorizontalListItemClick(HorizontalItemEnum.Food)
+                    )
                 }
             }
             item {
@@ -248,7 +259,10 @@ fun TopContainer(
                     stringResId = R.string.art,
                     containerColor = PictonBlue
                 ) {
-
+                    onEvent(
+                        HomeTopContainerEvent
+                            .HorizontalListItemClick(HorizontalItemEnum.Art)
+                    )
                 }
             }
         }
@@ -256,12 +270,18 @@ fun TopContainer(
 
 }
 
+
 @Preview
 @Composable
 fun TopContainerPreview() {
     EventBookingAppTheme {
         Surface(color = Color.White) {
-            TopContainer()
+            TopContainer(
+                searchQuery = "",
+                onEvent = {
+
+                }
+            )
         }
     }
 }
