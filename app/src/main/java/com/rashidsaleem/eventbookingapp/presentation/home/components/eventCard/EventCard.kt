@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black3
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue7
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
@@ -43,6 +44,12 @@ fun EventCard() {
     Column(
         modifier = Modifier
             .background(color = Color.White, shape = RoundedCornerShape(18.dp))
+//            .shadow(
+//                elevation = 8.dp,
+//                shape = RoundedCornerShape(18.dp),
+//                ambientColor = Black.copy(0.1f),
+//                spotColor = Black.copy(0.1f),
+//            )
             .padding(horizontal = 10.dp, vertical = 8.dp)
     ) {
         ImageContainer()
@@ -145,6 +152,7 @@ fun EventCard() {
 fun EventCardPreview() {
     EventBookingAppTheme {
         Surface(
+            modifier = Modifier,
             color = Color.Green,
         ) {
             EventCard()
