@@ -44,4 +44,7 @@
     <string name="upcomingEvents">Upcoming Events</string>
     <string name="hello">Hello</string>
     <string name="seeAll">See All</string>
+    <string name="inviteYourFriends">Invite Your Friends</string>
+    <string name="get20DollarForTicket">Get $20 for ticket</string>
+    <string name="invite">Invite</string>
 </resources>

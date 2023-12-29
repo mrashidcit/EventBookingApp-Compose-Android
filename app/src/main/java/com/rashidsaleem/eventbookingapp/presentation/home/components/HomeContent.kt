@@ -118,6 +118,13 @@ fun HomeContent() {
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(29.dp))
+            
+            // InviteYourFriend container
+            InviteYourFriendContainer(
+                modifier = Modifier.padding(horizontal = contentHorizontalPadding)
+            )
+
         }
     }
 }
