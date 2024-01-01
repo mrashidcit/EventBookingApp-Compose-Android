@@ -2,7 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.signUp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

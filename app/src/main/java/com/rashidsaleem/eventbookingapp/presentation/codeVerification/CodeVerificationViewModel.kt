@@ -1,11 +1,9 @@
 package com.rashidsaleem.eventbookingapp.presentation.codeVerification
 
-import android.os.CountDownTimer
-import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,10 +12,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
 import java.util.Timer
 import kotlin.concurrent.timer
-import kotlin.concurrent.timerTask
 
 class CodeVerificationViewModel: ViewModel() {
 

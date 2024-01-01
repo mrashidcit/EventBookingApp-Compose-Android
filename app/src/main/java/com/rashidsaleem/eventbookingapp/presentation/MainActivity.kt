@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
+import com.rashidsaleem.eventbookingapp.presentation.main.EventBookingAppMain
 import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
 import com.rashidsaleem.eventbookingapp.presentation.resetPassword.ResetPasswordScreen
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
@@ -34,89 +32,96 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            EventBookingAppTheme {
-                NavHost(
-                    navController = navController,
-                    startDestination = Routes.splash,
-//                    startDestination = Routes.resetPassword,
-                ) {
-                    composable(Routes.splash) {
-                        SplashScreen(
-                            navigateNext = { route ->
-                                navController.navigate(route)
-                            }
-                        )
-                    }
-                    composable(Routes.onboarding) {
-                        OnBoardingScreen(
-                            navigateNext = { route ->
-                                Log.d(TAG, "OnBoardingScreen - navigateNext: $route")
-                                navController.navigate(route)
-                            },
-                        )
-                    }
-                    composable(Routes.signIn) {
-                        SignInScreen(
-                            navigateNext = { route ->
-                                navController.navigate(route)
-                            }
-                        )
-                    }
-                    composable(Routes.signUp) {
-                        SignUpScreen(
-                            navigateNext = { route ->
-                                navController.navigate(route)
-                            },
-                            navigateBack = { route ->
-                                if (route.isNotEmpty()) {
-                                    navController.popBackStack(
-                                        route = route,
-                                        inclusive = false,
-                                    )
-                                } else {
-                                    navController.popBackStack()
-                                }
-                            }
-                        )
-                    }
-
-                    composable(Routes.home) {
-                        HomeScreen()
-                    }
-                    composable(Routes.codeVerification) {
-                        CodeVerificationScreen(
-                            navigateNext = { route ->
-                                navController.navigate(route) {
-                                    popUpTo(Routes.codeVerification) {
-                                        inclusive = true
-                                    }
-                                }
-                            },
-                            navigateBack = {
-                                navController.popBackStack()
-                            },
-                        )
-                    }
-
-                    composable(Routes.resetPassword) {
-                        ResetPasswordScreen(
-                            navigateNext = { route ->
-                                navController.navigate(route) {
-                                    popUpTo(Routes.resetPassword) {
-                                        inclusive = true
-                                    }
-                                }
-                            },
-                            navigateBack = {
-                                navController.popBackStack()
-                            },
-                        )
-                    }
+            EventBookingAppMain(
+                navController
+            )
+            EventBookingAppNavHost(navController)
+        }
+    }
 
 
-
-
+    @Composable
+    private fun EventBookingAppNavHost(navController: NavHostController) {
+        EventBookingAppTheme {
+            NavHost(
+                navController = navController,
+                startDestination = Routes.splash,
+    //                    startDestination = Routes.resetPassword,
+            ) {
+                composable(Routes.splash) {
+                    SplashScreen(
+                        navigateNext = { route ->
+                            navController.navigate(route)
+                        }
+                    )
                 }
+                composable(Routes.onboarding) {
+                    OnBoardingScreen(
+                        navigateNext = { route ->
+                            Log.d(TAG, "OnBoardingScreen - navigateNext: $route")
+                            navController.navigate(route)
+                        },
+                    )
+                }
+                composable(Routes.signIn) {
+                    SignInScreen(
+                        navigateNext = { route ->
+                            navController.navigate(route)
+                        }
+                    )
+                }
+                composable(Routes.signUp) {
+                    SignUpScreen(
+                        navigateNext = { route ->
+                            navController.navigate(route)
+                        },
+                        navigateBack = { route ->
+                            if (route.isNotEmpty()) {
+                                navController.popBackStack(
+                                    route = route,
+                                    inclusive = false,
+                                )
+                            } else {
+                                navController.popBackStack()
+                            }
+                        }
+                    )
+                }
+
+                composable(Routes.home) {
+                    HomeScreen()
+                }
+                composable(Routes.codeVerification) {
+                    CodeVerificationScreen(
+                        navigateNext = { route ->
+                            navController.navigate(route) {
+                                popUpTo(Routes.codeVerification) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        navigateBack = {
+                            navController.popBackStack()
+                        },
+                    )
+                }
+
+                composable(Routes.resetPassword) {
+                    ResetPasswordScreen(
+                        navigateNext = { route ->
+                            navController.navigate(route) {
+                                popUpTo(Routes.resetPassword) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        navigateBack = {
+                            navController.popBackStack()
+                        },
+                    )
+                }
+
+
             }
         }
     }

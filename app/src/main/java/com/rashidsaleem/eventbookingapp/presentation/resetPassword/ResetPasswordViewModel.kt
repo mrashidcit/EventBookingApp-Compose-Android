@@ -1,10 +1,8 @@
 package com.rashidsaleem.eventbookingapp.presentation.resetPassword
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.common.BaseEvent
-import com.rashidsaleem.eventbookingapp.presentation.common.BaseUiState
 import com.rashidsaleem.eventbookingapp.presentation.common.viewmodels.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow

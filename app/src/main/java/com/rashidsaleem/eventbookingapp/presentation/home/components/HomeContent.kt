@@ -44,7 +44,9 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
 @Composable
-fun HomeContent() {
+fun HomeContent(
+    modifier: Modifier = Modifier,
+) {
 
     val contentHorizontalPadding = remember {
         24.dp
@@ -63,7 +65,7 @@ fun HomeContent() {
 
         // Content
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .weight(1f)
 //                .padding(horizontal = 24.dp)
                 .verticalScroll(rememberScrollState())
@@ -119,11 +121,44 @@ fun HomeContent() {
                 }
             }
             Spacer(modifier = Modifier.height(29.dp))
-            
+
             // InviteYourFriend container
             InviteYourFriendContainer(
                 modifier = Modifier.padding(horizontal = contentHorizontalPadding)
             )
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Nearby You
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = contentHorizontalPadding),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                AppText(
+                    textResId = R.string.nearbyYou,
+                    fontWeight = FontWeight.Medium,
+                    color = Black2,
+                    fontSize = 18.sp,
+                )
+
+                Row(
+                    modifier = Modifier
+                        .clickable { },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    AppText(
+                        textResId = R.string.seeAll,
+                        color = Gray1,
+                        fontSize = 14.sp,
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24),
+                        contentDescription = null,
+                        tint = Gray1,
+                    )
+                }
+            }
 
         }
     }

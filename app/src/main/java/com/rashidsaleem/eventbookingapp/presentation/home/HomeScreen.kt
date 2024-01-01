@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.rashidsaleem.eventbookingapp.presentation.home.components.HomeContent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.drawer.DrawerContent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import kotlinx.coroutines.launch
@@ -36,24 +37,26 @@ fun HomeScreen() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerContent(onClick = { value ->
-                when(value) {
-                    DrawerEnum.ProfileIcon -> {}
-                    DrawerEnum.MyProfile -> {}
-                    DrawerEnum.Message -> {}
-                    DrawerEnum.Calendar -> {}
-                    DrawerEnum.Bookmark -> {}
-                    DrawerEnum.ContactUs -> {}
-                    DrawerEnum.Settings -> {}
-                    DrawerEnum.HelpsAndFaqs -> {}
-                    DrawerEnum.SignOut -> {}
-                    DrawerEnum.UpgradePro -> {}
-                }
-                scope.launch {
-                    drawerState.close()
-                }
-
-            })
+//            DrawerContent(
+//                onClick = { value ->
+//                    when (value) {
+//                        DrawerEnum.ProfileIcon -> {}
+//                        DrawerEnum.MyProfile -> {}
+//                        DrawerEnum.Message -> {}
+//                        DrawerEnum.Calendar -> {}
+//                        DrawerEnum.Bookmark -> {}
+//                        DrawerEnum.ContactUs -> {}
+//                        DrawerEnum.Settings -> {}
+//                        DrawerEnum.HelpsAndFaqs -> {}
+//                        DrawerEnum.SignOut -> {}
+//                        DrawerEnum.UpgradePro -> {}
+//                    }
+//                    scope.launch {
+//                        drawerState.close()
+//                    }
+//
+//                },
+//            )
         },
     ) {
         Scaffold(
@@ -69,24 +72,14 @@ fun HomeScreen() {
                         }
                     }
                 )
-            }
+            },
+
         ) { contentPadding ->
             // Screen content
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(contentPadding)
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Home",
-                        fontSize = 40.sp,
-                    )
-                }
-            }
+//            HomeContent(modifier = Modifier.padding(contentPadding))
+            Box(modifier = Modifier.padding(contentPadding)) // Test Box
         }
+
     }
 
 

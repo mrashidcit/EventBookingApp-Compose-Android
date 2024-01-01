@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import kotlinx.coroutines.delay
 

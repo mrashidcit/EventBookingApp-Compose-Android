@@ -47,4 +47,9 @@
     <string name="inviteYourFriends">Invite Your Friends</string>
     <string name="get20DollarForTicket">Get $20 for ticket</string>
     <string name="invite">Invite</string>
+    <string name="nearbyYou">Nearby You</string>
+    <string name="explore">Explore</string>
+    <string name="events">Events</string>
+    <string name="map">Map</string>
+    <string name="profile">Profile</string>
 </resources>
