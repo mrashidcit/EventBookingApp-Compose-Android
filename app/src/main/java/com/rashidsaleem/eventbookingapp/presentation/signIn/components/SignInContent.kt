@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.common.Routes
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInEvent
 import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black1

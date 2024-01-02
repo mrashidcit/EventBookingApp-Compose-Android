@@ -40,7 +40,12 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+//        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.7"
+//        kotlinCompilerExtensionVersion = "1.9.21"
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
     packaging {
         resources {
@@ -66,6 +71,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.compose.material:material:1.5.4")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
