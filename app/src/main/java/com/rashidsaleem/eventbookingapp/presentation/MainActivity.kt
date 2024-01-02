@@ -35,96 +35,12 @@ class MainActivity : ComponentActivity() {
             EventBookingAppMain(
                 navController
             )
-            EventBookingAppNavHost(navController)
+
         }
     }
 
 
-    @Composable
-    private fun EventBookingAppNavHost(navController: NavHostController) {
-        EventBookingAppTheme {
-            NavHost(
-                navController = navController,
-                startDestination = Routes.splash,
-    //                    startDestination = Routes.resetPassword,
-            ) {
-                composable(Routes.splash) {
-                    SplashScreen(
-                        navigateNext = { route ->
-                            navController.navigate(route)
-                        }
-                    )
-                }
-                composable(Routes.onboarding) {
-                    OnBoardingScreen(
-                        navigateNext = { route ->
-                            Log.d(TAG, "OnBoardingScreen - navigateNext: $route")
-                            navController.navigate(route)
-                        },
-                    )
-                }
-                composable(Routes.signIn) {
-                    SignInScreen(
-                        navigateNext = { route ->
-                            navController.navigate(route)
-                        }
-                    )
-                }
-                composable(Routes.signUp) {
-                    SignUpScreen(
-                        navigateNext = { route ->
-                            navController.navigate(route)
-                        },
-                        navigateBack = { route ->
-                            if (route.isNotEmpty()) {
-                                navController.popBackStack(
-                                    route = route,
-                                    inclusive = false,
-                                )
-                            } else {
-                                navController.popBackStack()
-                            }
-                        }
-                    )
-                }
 
-                composable(Routes.home) {
-                    HomeScreen()
-                }
-                composable(Routes.codeVerification) {
-                    CodeVerificationScreen(
-                        navigateNext = { route ->
-                            navController.navigate(route) {
-                                popUpTo(Routes.codeVerification) {
-                                    inclusive = true
-                                }
-                            }
-                        },
-                        navigateBack = {
-                            navController.popBackStack()
-                        },
-                    )
-                }
-
-                composable(Routes.resetPassword) {
-                    ResetPasswordScreen(
-                        navigateNext = { route ->
-                            navController.navigate(route) {
-                                popUpTo(Routes.resetPassword) {
-                                    inclusive = true
-                                }
-                            }
-                        },
-                        navigateBack = {
-                            navController.popBackStack()
-                        },
-                    )
-                }
-
-
-            }
-        }
-    }
 }
 
 @Composable

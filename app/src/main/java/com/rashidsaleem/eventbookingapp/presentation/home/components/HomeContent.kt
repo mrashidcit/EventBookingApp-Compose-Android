@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.home.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.eventCard.EventCard
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
@@ -46,6 +47,7 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 @Composable
 fun HomeContent(
     modifier: Modifier = Modifier,
+    topContainerOnEvent: (HomeTopContainerEvent) -> Unit,
 ) {
 
     val contentHorizontalPadding = remember {
@@ -60,7 +62,7 @@ fun HomeContent(
         // Top Container
         TopContainer(
             searchQuery = "",
-            onEvent = {}
+            onEvent = topContainerOnEvent
         )
 
         // Content
@@ -170,7 +172,9 @@ fun HomeContent(
 fun HomeContentPreview() {
     EventBookingAppTheme {
         Surface {
-            HomeContent()
+            HomeContent(
+                topContainerOnEvent = {}
+            )
         }
     }
 }
