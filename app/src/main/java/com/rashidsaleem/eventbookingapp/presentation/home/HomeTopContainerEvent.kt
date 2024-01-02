@@ -5,7 +5,7 @@ sealed class HomeTopContainerEvent {
     object NotificationIconClick: HomeTopContainerEvent()
     object CurrentLocationClick: HomeTopContainerEvent()
     object SearchIconClick: HomeTopContainerEvent()
-    object SearchFilterContainerClick: HomeTopContainerEvent()
+    data class SearchFilterContainerClick(val value: Boolean): HomeTopContainerEvent()
     data class UpdateSearchFieldValue(val value: String): HomeTopContainerEvent()
     data class HorizontalListItemClick(val value: HorizontalItemEnum): HomeTopContainerEvent()
 

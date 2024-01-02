@@ -11,5 +11,6 @@ object Routes {
     val events = "events"
     val map = "map"
     val profile = "profile"
+    val notifications = "notifications"
 
 }

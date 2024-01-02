@@ -16,6 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -37,16 +39,31 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black5
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue8
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
+    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    navigateNext: (String) -> Unit,
+    navigateBack: () -> Unit,
 ) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
+    val topContainerUiState by viewModel.topContainerUiState.collectAsState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route)
+                HomeViewModel.UiEvent.NavigateBack -> navigateBack()
+            }
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -150,19 +167,22 @@ fun HomeScreen(
             // Screen content
             HomeContent(
                 modifier = Modifier.padding(contentPadding),
-                topContainerOnEvent = {event ->
-                    when (event) {
-                        HomeTopContainerEvent.MenuIconClick -> {
-                            coroutineScope.launch {
-                                drawerState.apply {
-                                    if (isClosed) open() else close()
-                                }
+                topContainerUiState = topContainerUiState
+            ) { event ->
+                when (event) {
+                    HomeTopContainerEvent.MenuIconClick -> {
+                        coroutineScope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
                             }
                         }
-                        else -> {}
+                    }
+
+                    else -> {
+                        viewModel.topContainerOnEvent(event)
                     }
                 }
-                )
+            }
 //            Box(modifier = Modifier.padding(contentPadding)) // Test Box
         }
 
@@ -179,6 +199,8 @@ fun HomeScreenPreview() {
             val navController = rememberNavController()
             HomeScreen(
                 navController = navController,
+                navigateNext = {},
+                navigateBack = {},
             )
         }
     }

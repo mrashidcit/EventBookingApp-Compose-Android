@@ -11,6 +11,7 @@ import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.events.EventsScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
 import com.rashidsaleem.eventbookingapp.presentation.map.MapScreen
+import com.rashidsaleem.eventbookingapp.presentation.notifications.NotificationsScreen
 import com.rashidsaleem.eventbookingapp.presentation.onboarding.OnBoardingScreen
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileScreen
 import com.rashidsaleem.eventbookingapp.presentation.resetPassword.ResetPasswordScreen
@@ -74,6 +75,13 @@ fun EventBookingAppNavHost(
             composable(Routes.home) {
                 HomeScreen(
                     navController = navController,
+                    navigateNext = { route ->
+                        navController.navigate(route)
+
+                    },
+                    navigateBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
             composable(Routes.codeVerification) {
@@ -114,6 +122,10 @@ fun EventBookingAppNavHost(
             composable(Routes.profile) {
                 ProfileScreen()
             }
+            composable(Routes.notifications) {
+                NotificationsScreen()
+            }
+
         }
     }
 }

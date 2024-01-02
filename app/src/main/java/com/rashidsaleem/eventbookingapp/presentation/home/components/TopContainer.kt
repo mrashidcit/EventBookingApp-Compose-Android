@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,11 +40,10 @@ import com.rashidsaleem.eventbookingapp.presentation.common.components.Horizonta
 import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterContainer
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
+import com.rashidsaleem.eventbookingapp.presentation.home.state.HomeTopContainerUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.AtomicTangerine
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue3
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue4
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue5
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue6
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray5
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.MountainMeadow
@@ -54,8 +53,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopContainer(
-    searchQuery: String,
-    contentHoriztonalPadding: Dp = 24.dp,
+    contentHorizontalPadding: Dp = 24.dp,
+    topContainerUiState: HomeTopContainerUiState,
     onEvent: (HomeTopContainerEvent) -> Unit,
 ) {
     ConstraintLayout(
@@ -74,7 +73,7 @@ fun TopContainer(
                         bottomEnd = 33.dp
                     ),
                 )
-                .padding(horizontal = contentHoriztonalPadding)
+                .padding(horizontal = contentHorizontalPadding)
                 .constrainAs(content) {
 
                 }
@@ -157,7 +156,7 @@ fun TopContainer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 0.dp),
-                value = searchQuery,
+                value = topContainerUiState.searchQuery,
                 onValueChange = {
                     onEvent(HomeTopContainerEvent.UpdateSearchFieldValue(it))
                 },
@@ -201,7 +200,7 @@ fun TopContainer(
                 },
                 trailingIcon = {
                     SearchFilterContainer() {
-                        onEvent(HomeTopContainerEvent.SearchFilterContainerClick)
+                        onEvent(HomeTopContainerEvent.SearchFilterContainerClick(true))
                     }
                 }
             )
@@ -214,7 +213,7 @@ fun TopContainer(
                 .constrainAs(horizontalItemsList) {
                     top.linkTo(content.bottom, -26.dp)
                 },
-            contentPadding = PaddingValues(horizontal = contentHoriztonalPadding),
+            contentPadding = PaddingValues(horizontal = contentHorizontalPadding),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
@@ -276,12 +275,15 @@ fun TopContainer(
 fun TopContainerPreview() {
     EventBookingAppTheme {
         Surface(color = Color.White) {
-            TopContainer(
-                searchQuery = "",
-                onEvent = {
+            val uiState = remember {
+                HomeTopContainerUiState()
+            }
 
-                }
-            )
+            TopContainer(
+                topContainerUiState = uiState
+            ) {
+
+            }
         }
     }
 }
