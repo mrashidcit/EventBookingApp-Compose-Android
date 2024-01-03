@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp.presentation.home.state
+package com.rashidsaleem.eventbookingapp.presentation.home.states
 
 data class HomeTopContainerUiState(
     val searchQuery: String = "",

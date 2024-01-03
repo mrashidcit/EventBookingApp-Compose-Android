@@ -38,9 +38,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
 import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterContainer
-import com.rashidsaleem.eventbookingapp.presentation.home.HomeTopContainerEvent
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
-import com.rashidsaleem.eventbookingapp.presentation.home.state.HomeTopContainerUiState
+import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeTopContainerUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.AtomicTangerine
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue3
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue4

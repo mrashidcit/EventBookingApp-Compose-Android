@@ -31,9 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
-import com.rashidsaleem.eventbookingapp.presentation.home.HomeTopContainerEvent
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.eventCard.EventCard
-import com.rashidsaleem.eventbookingapp.presentation.home.state.HomeTopContainerUiState
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeContentEvent
+import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeContentUiState
+import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeTopContainerUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
@@ -42,7 +44,9 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
 fun HomeContent(
     modifier: Modifier = Modifier,
     topContainerUiState: HomeTopContainerUiState,
+    homeContentUiState: HomeContentUiState,
     topContainerOnEvent: (HomeTopContainerEvent) -> Unit,
+    homeContentOnEvent: (HomeContentEvent) -> Unit,
 ) {
 
     val contentHorizontalPadding = remember {
@@ -105,7 +109,8 @@ fun HomeContent(
                 contentPadding = PaddingValues(start = contentHorizontalPadding),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(5) {
+                items(homeContentUiState.upcomingEvents.size) {index ->
+                    val item = homeContentUiState.upcomingEvents[index]
                     Box(
                         modifier = Modifier
                             .shadow(
@@ -113,7 +118,10 @@ fun HomeContent(
                                 shape = RoundedCornerShape(18.dp)
                             ),
                     ) {
-                        EventCard()
+                        EventCard(
+                            event = item,
+                            onEvent = homeContentOnEvent,
+                        )
                     }
                 }
             }
@@ -167,11 +175,17 @@ fun HomeContent(
 fun HomeContentPreview() {
     EventBookingAppTheme {
         Surface {
-            val uiState = remember {
+            val homeTopContainerUiState = remember {
                 HomeTopContainerUiState()
             }
+            val homeContentUiState = remember {
+                HomeContentUiState()
+            }
+
             HomeContent(
-                topContainerUiState = uiState
+                topContainerUiState = homeTopContainerUiState,
+                homeContentUiState = homeContentUiState,
+                topContainerOnEvent = {}
             ) {}
         }
     }

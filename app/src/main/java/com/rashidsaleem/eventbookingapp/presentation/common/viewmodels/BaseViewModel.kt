@@ -19,7 +19,7 @@ open class BaseViewModel: ViewModel() {
         }
     }
 
-    private fun showLoader(value: Boolean) {
+    fun showLoader(value: Boolean) {
         _baseUiState.update {
             it.copy(
                 showLoader = value

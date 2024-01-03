@@ -35,6 +35,7 @@ import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.listOfBottomNavItems
 import com.rashidsaleem.eventbookingapp.presentation.home.components.HomeContent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.drawer.DrawerContent
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black5
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue8
@@ -54,6 +55,7 @@ fun HomeScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val topContainerUiState by viewModel.topContainerUiState.collectAsState()
+    val homeContentUiState by viewModel.homeContentUiState.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -167,23 +169,26 @@ fun HomeScreen(
             // Screen content
             HomeContent(
                 modifier = Modifier.padding(contentPadding),
-                topContainerUiState = topContainerUiState
-            ) { event ->
-                when (event) {
-                    HomeTopContainerEvent.MenuIconClick -> {
-                        coroutineScope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
+                topContainerUiState = topContainerUiState,
+                homeContentUiState = homeContentUiState,
+                topContainerOnEvent = { event ->
+                    when (event) {
+                        HomeTopContainerEvent.MenuIconClick -> {
+                            coroutineScope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
                             }
                         }
-                    }
 
-                    else -> {
-                        viewModel.topContainerOnEvent(event)
+                        else -> {
+                            viewModel.topContainerOnEvent(event)
+                        }
                     }
-                }
-            }
-//            Box(modifier = Modifier.padding(contentPadding)) // Test Box
+                },
+                homeContentOnEvent = { viewModel.homeContentOnEvent(it) }
+
+            )
         }
 
     }
