@@ -2,6 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeContentEvent
+import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeContentUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Aqua
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black4
@@ -33,6 +36,7 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppThe
 @Composable
 fun InviteYourFriendContainer(
     modifier: Modifier = Modifier,
+    homeContentOnEvent: (HomeContentEvent) -> Unit,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -69,6 +73,7 @@ fun InviteYourFriendContainer(
             Box(
                 modifier = Modifier
                     .background(color = Aqua, shape = RoundedCornerShape(5.dp))
+                    .clickable { homeContentOnEvent(HomeContentEvent.InviteYourFriend) }
                     .padding(vertical = 5.dp, horizontal = 14.dp)
             ) {
                 AppText(
@@ -102,7 +107,9 @@ fun InviteYourFriendContainer(
 fun InviteYourFriendContainerPreview() {
     EventBookingAppTheme {
         Surface {
-            InviteYourFriendContainer()
+            InviteYourFriendContainer(
+                homeContentOnEvent = {}
+            )
         }
     }
 }

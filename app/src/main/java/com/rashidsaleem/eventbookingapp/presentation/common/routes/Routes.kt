@@ -1,16 +1,18 @@
 package com.rashidsaleem.eventbookingapp.presentation.common.routes
 
 object Routes {
-    val splash = "splash"
-    val onboarding = "onboarding"
-    val signIn = "signIn"
-    val signUp = "signUp"
-    val home = "home"
-    val codeVerification = "CodeVerification"
-    val resetPassword = "resetPassword"
-    val events = "events"
-    val map = "map"
-    val profile = "profile"
-    val notifications = "notifications"
+    const val splash = "splash"
+    const val onboarding = "onboarding"
+    const val signIn = "signIn"
+    const val signUp = "signUp"
+    const val home = "home"
+    const val codeVerification = "CodeVerification"
+    const val resetPassword = "resetPassword"
+    const val events = "events"
+    const val map = "map"
+    const val profile = "profile"
+    const val notifications = "notifications"
+    const val eventDetail = "eventDetail"
+
 
 }

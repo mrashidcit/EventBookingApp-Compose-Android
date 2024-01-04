@@ -1,7 +1,9 @@
 package com.rashidsaleem.eventbookingapp.presentation.home.components.eventCard
 
+import android.text.format.DateUtils
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -22,11 +24,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.common.DateUtil
+import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeContentEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.SunsetOrange
 
 @Composable
-fun ImageContainer() {
+fun ImageContainer(
+    event: EventModel,
+    onEvent: (HomeContentEvent) -> Unit,
+) {
     ConstraintLayout(
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp)),
@@ -50,21 +58,21 @@ fun ImageContainer() {
                 .constrainAs(date) {
                     start.linkTo(parent.start, 7.dp)
                     top.linkTo(parent.top, 9.dp)
-                },
+                }
+            ,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AppText(
-                text = "10",
+                text = "${DateUtil.getDay(event.date)}",
                 color = SunsetOrange,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
             )
             AppText(
-                text = "JUNE",
+                text = "${DateUtil.getMonth(event.date)}",
                 color = SunsetOrange,
                 fontSize = 10.sp,
             )
-
         }
 
         Column(
@@ -74,7 +82,9 @@ fun ImageContainer() {
                 .constrainAs(bookmark) {
                     end.linkTo(parent.end, 9.dp)
                     top.linkTo(parent.top, 9.dp)
-                },
+                }
+                .clickable { onEvent(HomeContentEvent.EventBookmarkOnClick(event)) }
+            ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -85,7 +95,5 @@ fun ImageContainer() {
                 tint = SunsetOrange
             )
         }
-
-
     }
 }
