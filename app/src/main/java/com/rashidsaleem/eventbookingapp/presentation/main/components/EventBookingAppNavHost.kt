@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
+import com.rashidsaleem.eventbookingapp.presentation.eventDetail.EventDetailScreen
 import com.rashidsaleem.eventbookingapp.presentation.events.EventsScreen
 import com.rashidsaleem.eventbookingapp.presentation.home.HomeScreen
 import com.rashidsaleem.eventbookingapp.presentation.map.MapScreen
@@ -125,6 +126,10 @@ fun EventBookingAppNavHost(
             composable(Routes.notifications) {
                 NotificationsScreen()
             }
+            composable(Routes.eventDetail) {
+                EventDetailScreen()
+            }
+
 
         }
     }

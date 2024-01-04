@@ -2,6 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.home.components.eventCard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,12 +44,7 @@ fun EventCard(
     Column(
         modifier = modifier
             .background(color = Color.White, shape = RoundedCornerShape(18.dp))
-//            .shadow(
-//                elevation = 8.dp,
-//                shape = RoundedCornerShape(18.dp),
-//                ambientColor = Black.copy(0.1f),
-//                spotColor = Black.copy(0.1f),
-//            )
+            .clickable { onEvent(HomeContentEvent.EventCardOnClick(event)) }
             .padding(horizontal = 10.dp, vertical = 8.dp)
     ) {
         ImageContainer(
@@ -98,39 +94,6 @@ fun EventCard(
                         contentScale = ContentScale.FillBounds,
                     )
                 }.reversed()
-//                // Img 3
-//                Image(
-//                    modifier = Modifier
-//                        .padding(start = (16 * 2).dp)
-//                        .width(24.dp)
-//                        .height(19.43.dp)
-//                        .clip(CircleShape),
-//                    painter = painterResource(id = R.drawable.img_going_3),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.FillBounds,
-//                )
-//                // Img 2
-//                Image(
-//                    modifier = Modifier
-//                        .padding(start = 16.dp)
-//                        .width(24.dp)
-//                        .height(19.43.dp)
-//                        .clip(CircleShape),
-//                    painter = painterResource(id = R.drawable.img_going_2),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.FillBounds,
-//                )
-//                // Img 1
-//                Image(
-//                    modifier = Modifier
-//                        .padding(start = 16.dp * 0)
-//                        .width(24.dp)
-//                        .height(19.43.dp)
-//                        .clip(CircleShape),
-//                    painter = painterResource(id = R.drawable.img_going_1),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.FillBounds,
-//                )
             }
             Spacer(modifier = Modifier.width(10.dp))
             AppText(

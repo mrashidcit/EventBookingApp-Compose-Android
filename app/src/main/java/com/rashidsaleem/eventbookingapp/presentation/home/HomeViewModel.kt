@@ -101,16 +101,24 @@ class HomeViewModel: BaseViewModel() {
         }
     }
 
-    private fun eventCardOnClick(value: EventModel) {
-        
+    private fun nearbyYouSeeAllOnClick() = _scope.launch(Dispatchers.Main) {
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.map))
+    }
+
+    private fun inviteYourFriend() {
+
+    }
+
+    private fun eventCardOnClick(value: EventModel) = _scope.launch(Dispatchers.Main) {
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.eventDetail))
     }
 
     private fun eventBookmarkOnClick(value: EventModel) {
 
     }
 
-    private fun upcomingEventSeeAllOnClick() {
-
+    private fun upcomingEventSeeAllOnClick() = _scope.launch(Dispatchers.Main) {
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.events))
     }
 
     sealed class UiEvent {

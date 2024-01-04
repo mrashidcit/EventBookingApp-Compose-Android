@@ -87,7 +87,7 @@ fun HomeContent(
 
                 Row(
                     modifier = Modifier
-                        .clickable { },
+                        .clickable { homeContentOnEvent(HomeContentEvent.UpcomingEventSeeAll) },
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AppText(
@@ -129,7 +129,8 @@ fun HomeContent(
 
             // InviteYourFriend container
             InviteYourFriendContainer(
-                modifier = Modifier.padding(horizontal = contentHorizontalPadding)
+                modifier = Modifier.padding(horizontal = contentHorizontalPadding),
+                homeContentOnEvent = homeContentOnEvent,
             )
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -149,7 +150,7 @@ fun HomeContent(
 
                 Row(
                     modifier = Modifier
-                        .clickable { },
+                        .clickable { homeContentOnEvent(HomeContentEvent.NearbyYouSeeAll) },
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AppText(
