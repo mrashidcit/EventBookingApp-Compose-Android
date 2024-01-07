@@ -54,4 +54,6 @@
     <string name="profile">Profile</string>
     <string name="event_details">Event Details</string>
     <string name="follow">Follow</string>
+    <string name="about_event">About Event</string>
+    <string name="buy_ticket">Buy Ticket</string>
 </resources>

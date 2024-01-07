@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -78,10 +79,20 @@ fun ContentContainer(
         // Profile Info Container
         ProfileInfoContainer()
 
-//        Spacer(modifier = Modifier.height(21.dp))
-//        AppText(
-//            textResId = R.string.about_event
-//        )
+        Spacer(modifier = Modifier.height(21.dp))
+        AppText(
+            textResId = R.string.about_event,
+            fontSize = 18.sp,
+            color = Black2.copy(0.84f),
+            fontWeight = FontWeight.Medium,
+            lineHeight = 34.sp,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        AppText(
+            text = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+            fontSize = 16.sp,
+            lineHeight = 28.sp,
+        )
 
     }
 }
@@ -94,7 +105,7 @@ private fun ProfileInfoContainer() {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            modifier = Modifier.size(44.dp),
+            modifier = Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)),
             painter = painterResource(id = R.drawable.img_user_ashfak),
             contentDescription = null,
         )
