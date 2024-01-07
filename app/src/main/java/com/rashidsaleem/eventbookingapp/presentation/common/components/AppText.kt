@@ -21,6 +21,7 @@ fun AppText(
     fontWeight: FontWeight = FontWeight.Normal,
     fontSize: TextUnit = TextUnit.Unspecified,
     color: Color = Color.Unspecified,
+    lineHeight: TextUnit = TextUnit.Unspecified,
 ) {
     Text(
         modifier = modifier,
@@ -29,5 +30,6 @@ fun AppText(
         fontWeight = fontWeight,
         fontSize = fontSize,
         color = color,
+        lineHeight = lineHeight
     )
 }
