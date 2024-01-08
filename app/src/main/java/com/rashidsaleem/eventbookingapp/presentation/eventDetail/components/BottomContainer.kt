@@ -38,7 +38,8 @@ fun BottomContainer(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 23.dp, horizontal = 52.dp)
+            .padding(horizontal = 52.dp)
+            .padding(bottom = 23.dp)
     ) {
         Button(
             modifier = Modifier

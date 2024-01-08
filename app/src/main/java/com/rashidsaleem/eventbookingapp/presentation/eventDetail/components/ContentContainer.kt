@@ -3,6 +3,7 @@ package com.rashidsaleem.eventbookingapp.presentation.eventDetail.components
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.common.DateUtil
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.eventDetail.EventDetailEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black6
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
@@ -43,7 +45,8 @@ import java.util.Calendar
 
 @Composable
 fun ContentContainer(
-    event: EventModel
+    event: EventModel,
+    onEvent: (EventDetailEvent) -> Unit,
 ) {
     val horizontalPadding = remember {
         24.dp
@@ -77,7 +80,9 @@ fun ContentContainer(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Profile Info Container
-        ProfileInfoContainer()
+        ProfileInfoContainer(
+            onEvent = onEvent
+        )
 
         Spacer(modifier = Modifier.height(21.dp))
         AppText(
@@ -98,20 +103,26 @@ fun ContentContainer(
 }
 
 @Composable
-private fun ProfileInfoContainer() {
+private fun ProfileInfoContainer(
+    onEvent: (EventDetailEvent) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            modifier = Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)),
+            modifier = Modifier
+                .size(44.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .clickable { onEvent(EventDetailEvent.OrganizerProfileDetail) },
             painter = painterResource(id = R.drawable.img_user_ashfak),
             contentDescription = null,
         )
         Spacer(modifier = Modifier.width(13.dp))
         Column(
             modifier = Modifier.weight(1f)
+                .clickable { onEvent(EventDetailEvent.OrganizerProfileDetail) }
         ) {
             AppText(
                 text = "Ashfak Sayem",
@@ -132,6 +143,7 @@ private fun ProfileInfoContainer() {
                     color = Blue.copy(0.12f),
                     shape = RoundedCornerShape(7.dp)
                 )
+                .clickable { onEvent(EventDetailEvent.Follow) }
         ) {
             AppText(
                 modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp),
@@ -223,7 +235,8 @@ fun ContentContainerPreview() {
             }
 
             ContentContainer(
-                event = event
+                event = event,
+                onEvent = {}
             )
         }
     }

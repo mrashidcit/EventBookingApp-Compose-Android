@@ -110,7 +110,7 @@ class HomeViewModel: BaseViewModel() {
     }
 
     private fun eventCardOnClick(value: EventModel) = _scope.launch(Dispatchers.Main) {
-        _eventFlow.emit(UiEvent.NavigateNext(Routes.eventDetail))
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.eventDetail, value))
     }
 
     private fun eventBookmarkOnClick(value: EventModel) {
@@ -122,7 +122,7 @@ class HomeViewModel: BaseViewModel() {
     }
 
     sealed class UiEvent {
-        data class NavigateNext(val route: String): UiEvent()
+        data class NavigateNext(val route: String, val event: EventModel? = null): UiEvent()
         object NavigateBack: UiEvent()
     }
 

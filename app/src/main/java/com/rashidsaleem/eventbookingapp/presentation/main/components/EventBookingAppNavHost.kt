@@ -6,6 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.rashidsaleem.eventbookingapp.common.AppConstants
+import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.eventDetail.EventDetailScreen
@@ -32,6 +34,7 @@ fun EventBookingAppNavHost(
             navController = navController,
 //            startDestination = Routes.splash,
             startDestination = Routes.home,
+//            startDestination = Routes.eventDetail,
         ) {
             composable(Routes.splash) {
                 SplashScreen(
@@ -76,9 +79,13 @@ fun EventBookingAppNavHost(
             composable(Routes.home) {
                 HomeScreen(
                     navController = navController,
-                    navigateNext = { route ->
+                    navigateNext = { route, event ->
+                        navController
+                            .currentBackStackEntry
+                            ?.savedStateHandle?.apply {
+                                set(AppConstants.KEY_EVENT_MODEL, event)
+                            }
                         navController.navigate(route)
-
                     },
                     navigateBack = {
                         navController.popBackStack()
@@ -127,7 +134,12 @@ fun EventBookingAppNavHost(
                 NotificationsScreen()
             }
             composable(Routes.eventDetail) {
-                EventDetailScreen()
+                EventDetailScreen(
+                    navigateBack = {},
+                    navigateNext = { route ->
+                        navController.navigate(route)
+                    }
+                )
             }
 
 
