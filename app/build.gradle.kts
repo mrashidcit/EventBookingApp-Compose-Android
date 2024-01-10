@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+//    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
@@ -69,12 +70,21 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // Navigation
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // Material
     implementation("androidx.compose.material:material:1.5.4")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
@@ -88,8 +98,11 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+//    implementation("com.google.dagger:hilt-android:2.44")
+//    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+
 
 }
 

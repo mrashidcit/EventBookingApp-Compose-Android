@@ -3,6 +3,7 @@ package com.rashidsaleem.eventbookingapp.presentation.eventDetail
 import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.common.AppUtil
@@ -29,15 +30,6 @@ class EventDetailViewModel @Inject constructor(
     val uiState: StateFlow<EventDetailState> = _uiState.asStateFlow()
 
     init {
-        savedStateHandle.get<EventModel>(AppConstants.KEY_EVENT_MODEL)?.let {event ->
-
-            _uiState.update {
-                it.copy(
-                    event = event
-                )
-            }
-
-        }
     }
 
     fun onEvent(event: EventDetailEvent) {
@@ -88,7 +80,18 @@ class EventDetailViewModel @Inject constructor(
 
     }
 
-
+    fun updateData(bundle: Bundle) {
+        bundle.getString(AppConstants.KEY_EVENT_MODEL, null)?.let { eventJson ->
+            val gson = Gson()
+            gson.fromJson(eventJson, EventModel::class.java)?.let { event ->
+                _uiState.update {
+                    it.copy(
+                        event = event
+                    )
+                }
+            }
+        }
+    }
 
 
     sealed class UiEvent {
