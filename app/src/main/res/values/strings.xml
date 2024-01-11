@@ -57,4 +57,5 @@
     <string name="about_event">About Event</string>
     <string name="buy_ticket">Buy Ticket</string>
     <string name="successfully_bookmarked">Successfully Bookmarked</string>
+    <string name="find_for_food_or_restaurant_nearby_you">Find for food or restaurant nearby you</string>
 </resources>

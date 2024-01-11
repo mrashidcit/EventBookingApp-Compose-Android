@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
@@ -21,6 +22,8 @@ fun AppText(
     fontWeight: FontWeight = FontWeight.Normal,
     fontSize: TextUnit = TextUnit.Unspecified,
     color: Color = Color.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines: Int = Int.MAX_VALUE,
     lineHeight: TextUnit = TextUnit.Unspecified,
 ) {
     Text(
@@ -30,6 +33,8 @@ fun AppText(
         fontWeight = fontWeight,
         fontSize = fontSize,
         color = color,
-        lineHeight = lineHeight
+        lineHeight = lineHeight,
+        maxLines = maxLines,
+        overflow = overflow
     )
 }
