@@ -225,6 +225,7 @@ fun ContentContainerPreview() {
                 }.time
 
                 EventModel(
+                    id = 1,
                     venue = "Gala Convention Center",
                     address = "36 Guild Street London, UK",
                     date = date,

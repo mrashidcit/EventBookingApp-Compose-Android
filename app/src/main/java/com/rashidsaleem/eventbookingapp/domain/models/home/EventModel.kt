@@ -6,6 +6,7 @@ import java.util.Calendar
 import java.util.Date
 
 data class EventModel(
+    val id: Int,
     val venue: String = "",
     val date: Date? = null,
     val startTime: Date? = null,
@@ -13,6 +14,7 @@ data class EventModel(
     val title: String = "",
     val goingPersons: List<Int> = listOf<Int>(),
     val address: String = "",
+    val isBookmarked: Boolean = false,
 ) {
 
     fun getFirst3Persons() = if (goingPersons.size <= 3)
@@ -42,6 +44,7 @@ data class EventModel(
     companion object {
         fun dummyEvents() = arrayListOf<EventModel>(
             EventModel(
+                id = 1,
                 venue = "",
                 date = Calendar.getInstance().apply {
                     this.set(Calendar.DAY_OF_MONTH, 1)
@@ -62,6 +65,7 @@ data class EventModel(
                 address = "36 Guild Street London, UK"
             ),
             EventModel(
+                id = 2,
                 venue = "",
                 date = Calendar.getInstance().apply {
                     this.set(Calendar.DAY_OF_MONTH, 1)
@@ -82,6 +86,7 @@ data class EventModel(
                 address = "Radius Gallery.Santa Cruz, CA"
             ),
             EventModel(
+                id = 3,
                 venue = "",
                 date = Calendar.getInstance().apply {
                     this.set(Calendar.DAY_OF_MONTH, 1)
@@ -102,6 +107,7 @@ data class EventModel(
                 address = "36 Guild Street London, UK"
             ),
             EventModel(
+                id = 4,
                 venue = "",
                 date = Calendar.getInstance().apply {
                     this.set(Calendar.DAY_OF_MONTH, 1)
@@ -122,6 +128,7 @@ data class EventModel(
                 address = "36 Guild Street London, UK"
             ),
             EventModel(
+                id = 5,
                 venue = "",
                 date = Calendar.getInstance().apply {
                     this.set(Calendar.DAY_OF_MONTH, 1)

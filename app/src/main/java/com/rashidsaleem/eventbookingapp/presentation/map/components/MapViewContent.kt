@@ -24,22 +24,24 @@ import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
 import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
-import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.AtomicTangerine
+import com.rashidsaleem.eventbookingapp.presentation.map.MapViewEvent
+import com.rashidsaleem.eventbookingapp.presentation.map.MapViewState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue9
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray10
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.MountainMeadow
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.MountainMeadow1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Orange
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.PictonBlue
 
 @Composable
-fun MapViewContent() {
+fun MapViewContent(
+    uiState: MapViewState,
+    onEvent: (MapViewEvent) -> Unit,
+    ) {
 
-    val events = remember {
-        EventModel.dummyEvents()
-    }
+//    val events = remember {
+//        EventModel.dummyEvents()
+//    }
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
@@ -56,7 +58,10 @@ fun MapViewContent() {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            TopAppBar(searchQuery = "")
+            TopAppBar(
+                searchQuery = uiState.searchQuery,
+                onEvent = onEvent,
+            )
             Spacer(modifier = Modifier.height(20.dp))
             LazyRow(
                 modifier = Modifier
@@ -73,10 +78,9 @@ fun MapViewContent() {
                         containerColor = Color.White,
                         stringResId = R.string.sports,
                     ) {
-//                        onEvent(
-//                            HomeTopContainerEvent
-//                                .HorizontalListItemClick(HorizontalItemEnum.Sports)
-//                        )
+                        onEvent(
+                            MapViewEvent.TopListItemOnClick(HorizontalItemEnum.Sports)
+                        )
                     }
                 }
                 item {
@@ -87,10 +91,9 @@ fun MapViewContent() {
                         containerColor = Color.White,
                         stringResId = R.string.music,
                     ) {
-//                        onEvent(
-//                            HomeTopContainerEvent
-//                                .HorizontalListItemClick(HorizontalItemEnum.Music)
-//                        )
+                        onEvent(
+                            MapViewEvent.TopListItemOnClick(HorizontalItemEnum.Music)
+                        )
                     }
                 }
                 item {
@@ -101,10 +104,9 @@ fun MapViewContent() {
                         containerColor = Color.White,
                         stringResId = R.string.food,
                     ) {
-//                        onEvent(
-//                            HomeTopContainerEvent
-//                                .HorizontalListItemClick(HorizontalItemEnum.Food)
-//                        )
+                        onEvent(
+                            MapViewEvent.TopListItemOnClick(HorizontalItemEnum.Food)
+                        )
                     }
                 }
                 item {
@@ -115,10 +117,9 @@ fun MapViewContent() {
                         containerColor = Color.White,
                         stringResId = R.string.art,
                     ) {
-//                        onEvent(
-//                            HomeTopContainerEvent
-//                                .HorizontalListItemClick(HorizontalItemEnum.Art)
-//                        )
+                        onEvent(
+                            MapViewEvent.TopListItemOnClick(HorizontalItemEnum.Art)
+                        )
                     }
                 }
             }
@@ -133,7 +134,10 @@ fun MapViewContent() {
                     end.linkTo(parent.end)
                 }
         ) {
-            EventsList(events = events)
+            EventsList(
+                events = uiState.events,
+                onEvent = onEvent,
+            )
         }
     }
 }
@@ -143,7 +147,15 @@ fun MapViewContent() {
 fun MapViewContentPreview() {
     EventBookingAppTheme {
         Surface {
-            MapViewContent()
+
+            val uiState = remember {
+                MapViewState()
+            }
+
+            MapViewContent(
+                uiState = uiState,
+                onEvent = { }
+            )
         }
     }
 }

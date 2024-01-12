@@ -21,6 +21,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.map.MapViewEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black7
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
@@ -39,7 +41,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.SunsetOrange
 
 @Composable
 fun TopAppBar(
-    searchQuery: String
+    searchQuery: String,
+    onEvent: (MapViewEvent) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -53,7 +56,7 @@ fun TopAppBar(
         OutlinedTextField(
             modifier = Modifier.weight(1f),
             value = searchQuery,
-            onValueChange = { },
+            onValueChange = { onEvent(MapViewEvent.PerformSearch(it)) },
             shape = RoundedCornerShape(12.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 backgroundColor = Color.White,
@@ -77,7 +80,7 @@ fun TopAppBar(
 //                        .width(6.32.dp)
 //                        .height(12.dp)
                         .clickable {
-
+                            onEvent(MapViewEvent.BackArrowIconOnClick)
                     },
                     painter = painterResource(id = R.drawable.ic_arrow_back_ios),
                     contentDescription = null,
@@ -91,13 +94,16 @@ fun TopAppBar(
                     color = Color.White,
                     shape = RoundedCornerShape(12.dp),
                 )
+                .clip(RoundedCornerShape(12.dp))
+                .clickable {
+                    onEvent(MapViewEvent.MyLocationIconOnClick)
+                }
                 .padding(
                     start = 14.dp,
                     top = 15.dp,
                     end = 15.dp,
                     bottom = 14.dp,
                 )
-                .clickable { }
         ) {
             Image(
                 modifier = Modifier.size(22.dp),
@@ -118,6 +124,7 @@ fun TopAppBarPreview() {
         ) {
             TopAppBar(
                 searchQuery = "",
+                onEvent = { }
             )
         }
     }

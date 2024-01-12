@@ -13,11 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
+import com.rashidsaleem.eventbookingapp.presentation.map.MapViewEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 @Composable
 fun EventsList(
     events: List<EventModel>,
+    onEvent: (MapViewEvent) -> Unit
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(13.dp),
@@ -31,6 +33,12 @@ fun EventsList(
                 val item = events[index]
                 EventItem(
 //                    event = item
+                    bookMarkOnClick = {
+                        onEvent(MapViewEvent.EventBookMark(item))
+                    },
+                    itemOnClick = {
+                        onEvent(MapViewEvent.EventListItemOnClick(item))
+                    }
                 )
             }
         },
@@ -51,7 +59,8 @@ fun EventsListPreview() {
             }
 
             EventsList(
-                events = events
+                events = events,
+                onEvent = {}
             )
         }
     }

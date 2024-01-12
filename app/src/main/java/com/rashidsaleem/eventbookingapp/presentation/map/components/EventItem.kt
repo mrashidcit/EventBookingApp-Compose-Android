@@ -3,6 +3,7 @@ package com.rashidsaleem.eventbookingapp.presentation.map.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Orange1
 @Composable
 fun EventItem(
     modifier: Modifier = Modifier,
+    bookMarkOnClick: () -> Unit,
+    itemOnClick: () -> Unit,
 ) {
     val configuration = LocalConfiguration.current
 
@@ -51,6 +54,8 @@ fun EventItem(
                 color = Color.White,
                 shape = RoundedCornerShape(16.dp)
             )
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { itemOnClick() }
             .zIndex(4f)
 //            .border(
 //                width = 1.dp,
@@ -94,7 +99,8 @@ fun EventItem(
                 Icon(
                     modifier = Modifier
                         .width(16.11.dp)
-                        .height(16.dp),
+                        .height(16.dp)
+                        .clickable { bookMarkOnClick() },
                     painter = painterResource(id = R.drawable.ic_bookmark),
                     contentDescription = null,
                     tint = Orange1,
@@ -139,7 +145,10 @@ fun HorizontalEventItem() {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            EventItem()
+            EventItem(
+                bookMarkOnClick = {},
+                itemOnClick = {},
+            )
         }
     }
 }
