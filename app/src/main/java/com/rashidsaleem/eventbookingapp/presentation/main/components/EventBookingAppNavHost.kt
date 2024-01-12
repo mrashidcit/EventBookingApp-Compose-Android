@@ -3,9 +3,13 @@ package com.rashidsaleem.eventbookingapp.presentation.main.components
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.os.bundleOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.gson.Gson
+import com.rashidsaleem.eventbookingapp.common.AppConstants
+import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.eventDetail.EventDetailScreen
@@ -20,6 +24,7 @@ import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
 import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpScreen
 import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
+import kotlinx.coroutines.flow.update
 
 private const val TAG = "EventBookingAppNavHost"
 @Composable
@@ -32,6 +37,7 @@ fun EventBookingAppNavHost(
             navController = navController,
 //            startDestination = Routes.splash,
             startDestination = Routes.home,
+//            startDestination = Routes.eventDetail,
         ) {
             composable(Routes.splash) {
                 SplashScreen(
@@ -76,9 +82,19 @@ fun EventBookingAppNavHost(
             composable(Routes.home) {
                 HomeScreen(
                     navController = navController,
-                    navigateNext = { route ->
+                    navigateNext = { route, event ->
+                        navController
+                            .currentBackStackEntry
+                            ?.savedStateHandle?.apply {
+                                val gson = Gson()
+                                val eventJson = try {
+                                    gson.toJson(event, EventModel::class.java)
+                                } catch (ex: Exception) {
+                                    ""
+                                }
+                                set<String>(AppConstants.KEY_EVENT_MODEL, eventJson)
+                            }
                         navController.navigate(route)
-
                     },
                     navigateBack = {
                         navController.popBackStack()
@@ -118,7 +134,23 @@ fun EventBookingAppNavHost(
                 EventsScreen()
             }
             composable(Routes.map) {
-                MapScreen()
+                MapScreen(
+                    navigateNext = { route, params ->
+
+                        if (route == Routes.eventDetail) {
+                            params.getString(AppConstants.KEY_EVENT_MODEL, "").let { event ->
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set(AppConstants.KEY_EVENT_MODEL, event)
+                            }
+                        }
+                        navController.navigate(route)
+
+                    },
+                    navigateBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(Routes.profile) {
                 ProfileScreen()
@@ -127,7 +159,19 @@ fun EventBookingAppNavHost(
                 NotificationsScreen()
             }
             composable(Routes.eventDetail) {
-                EventDetailScreen()
+                val eventJson = navController.previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.get<String>(AppConstants.KEY_EVENT_MODEL) ?: ""
+                val bundle = bundleOf().apply {
+                    putString(AppConstants.KEY_EVENT_MODEL, eventJson)
+                }
+                EventDetailScreen(
+                    bundle = bundle,
+                    navigateBack = {},
+                    navigateNext = { route ->
+                        navController.navigate(route)
+                    }
+                )
             }
 
 

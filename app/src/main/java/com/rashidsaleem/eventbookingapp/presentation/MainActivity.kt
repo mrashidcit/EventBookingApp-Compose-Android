@@ -22,7 +22,9 @@ import com.rashidsaleem.eventbookingapp.presentation.signIn.SignInScreen
 import com.rashidsaleem.eventbookingapp.presentation.signUp.SignUpScreen
 import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
 

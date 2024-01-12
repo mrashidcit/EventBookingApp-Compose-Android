@@ -24,7 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue9
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray10
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.SunsetOrange
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
@@ -34,10 +36,12 @@ fun HorizontalListItemButton(
     @StringRes stringResId: Int = R.string.sports,
     containerColor: Color? = null,
     contentColor: Color? = null,
+    iconColor: Color? = null,
+    textColor: Color? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = containerColor ?: SunsetOrange,
-        contentColor = contentColor ?: Color.White
-    ),
+            containerColor = containerColor ?: SunsetOrange,
+            contentColor = contentColor ?: Color.White
+        ),
     onClick: () -> Unit,
 ) {
     Button(
@@ -53,13 +57,14 @@ fun HorizontalListItemButton(
                 modifier = Modifier.size(17.73.dp),
                 painter = painterResource(id = icon),
                 contentDescription = null,
+                tint = iconColor ?: contentColor ?: Color.White
             )
             Spacer(Modifier.width(8.31.dp))
             Text(
                 text = stringResource(id = stringResId),
                 fontFamily = airbnbCerealFontFamily,
                 fontWeight = FontWeight.Normal,
-                color = Color.White,
+                color = textColor ?: contentColor ?: Color.White,
             )
         }
     }
@@ -70,7 +75,13 @@ fun HorizontalListItemButton(
 fun HorizontalListItemButtonPreview() {
     EventBookingAppTheme {
         Surface {
-            HorizontalListItemButton() {
+            HorizontalListItemButton(
+                icon = R.drawable.ic_music,
+                iconColor = Blue9,
+                textColor = Gray10,
+                stringResId = R.string.music,
+                containerColor = Color.White,
+            ) {
 
             }
         }

@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.listOfBottomNavItems
 import com.rashidsaleem.eventbookingapp.presentation.home.components.HomeContent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.drawer.DrawerContent
@@ -48,7 +49,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    navigateNext: (String) -> Unit,
+    navigateNext: (String, EventModel?) -> Unit,
     navigateBack: () -> Unit,
 ) {
 
@@ -60,7 +61,7 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route)
+                is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route, event.event)
                 HomeViewModel.UiEvent.NavigateBack -> navigateBack()
             }
         }
@@ -204,7 +205,7 @@ fun HomeScreenPreview() {
             val navController = rememberNavController()
             HomeScreen(
                 navController = navController,
-                navigateNext = {},
+                navigateNext = { route , event -> },
                 navigateBack = {},
             )
         }
