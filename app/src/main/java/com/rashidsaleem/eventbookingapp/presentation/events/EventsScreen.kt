@@ -6,13 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.rashidsaleem.eventbookingapp.presentation.events.components.EventsContent
 
 @Composable
 fun EventsScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = "Events",
-            )
-    }
+    EventsContent()
 }

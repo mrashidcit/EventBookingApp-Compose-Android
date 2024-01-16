@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.rashidsaleem.eventbookingapp.R
@@ -25,7 +26,9 @@ fun AppText(
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
     lineHeight: TextUnit = TextUnit.Unspecified,
-) {
+    textAlign: TextAlign? = null,
+
+    ) {
     Text(
         modifier = modifier,
         text = text ?: stringResource(id = textResId),
@@ -35,6 +38,7 @@ fun AppText(
         color = color,
         lineHeight = lineHeight,
         maxLines = maxLines,
-        overflow = overflow
+        overflow = overflow,
+        textAlign = textAlign,
     )
 }

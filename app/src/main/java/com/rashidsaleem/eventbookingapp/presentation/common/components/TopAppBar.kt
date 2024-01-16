@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,10 +31,11 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppThe
 fun TopAppBar(
     contentColor: Color = Color.White,
     text: String = "",
-    @DrawableRes leftIconId: Int? = R.drawable.ic_arrow_left,
-    @DrawableRes rightIconId: Int? = null,
-    leftIconOnClick: () -> Unit,
-    rightIconOnClick: () -> Unit,
+    @DrawableRes leadingIconId: Int? = R.drawable.ic_arrow_left,
+    @DrawableRes trailingIconId: Int? = null,
+    trailingIcons: @Composable (RowScope.() -> Unit)? = null,
+    leadingIconOnClick: () -> Unit,
+    trailingIconOnClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
@@ -42,12 +43,12 @@ fun TopAppBar(
             .padding(horizontal = 24.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (leftIconId != null) {
+        if (leadingIconId != null) {
             Icon(
                 modifier = Modifier
                     .size(22.dp)
-                    .clickable { leftIconOnClick() },
-                painter = painterResource(id = leftIconId),
+                    .clickable { leadingIconOnClick() },
+                painter = painterResource(id = leadingIconId),
                 contentDescription = null,
                 tint = contentColor,
             )
@@ -60,7 +61,7 @@ fun TopAppBar(
             color = contentColor,
         )
         Spacer(modifier = Modifier.weight(1f))
-        if (rightIconId != null) {
+        if (trailingIconId != null && trailingIcons == null) {
             Box(
                 modifier = Modifier
                     .size(36.dp)
@@ -68,17 +69,23 @@ fun TopAppBar(
                         color = Color.White.copy(0.30f),
                         shape = RoundedCornerShape(10.dp)
                     )
-                    .clickable { rightIconOnClick() }
+                    .clickable { trailingIconOnClick?.invoke() }
             ) {
                 Icon(
                     modifier = Modifier
                         .width(15.dp)
                         .height(14.9.dp)
                         .align(Alignment.Center),
-                    painter = painterResource(id = rightIconId),
+                    painter = painterResource(id = trailingIconId),
                     contentDescription = null,
                     tint = contentColor,
                 )
+            }
+        } else if (trailingIcons != null) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                trailingIcons()
             }
         }
     }
@@ -93,8 +100,8 @@ fun TopAppBarPreview() {
         ) {
             TopAppBar(
                 text = "Event Details",
-                rightIconId = R.drawable.ic_bookmark,
-                leftIconOnClick = {
+                trailingIconId = R.drawable.ic_bookmark,
+                leadingIconOnClick = {
 
                 },
             ) {

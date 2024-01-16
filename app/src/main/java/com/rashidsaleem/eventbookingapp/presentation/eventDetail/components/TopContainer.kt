@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -65,9 +64,9 @@ fun TopContainer(
 
         TopAppBar(
             text = stringResource(id = R.string.event_details),
-            rightIconId = R.drawable.ic_bookmark,
-            leftIconOnClick = { onEvent(EventDetailEvent.NavigateBack) },
-            rightIconOnClick = { onEvent(EventDetailEvent.Bookmark(event)) }
+            trailingIconId = R.drawable.ic_bookmark,
+            leadingIconOnClick = { onEvent(EventDetailEvent.NavigateBack) },
+            trailingIconOnClick = { onEvent(EventDetailEvent.Bookmark(event)) }
         )
         // Going Persons
         Row(

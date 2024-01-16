@@ -1,8 +1,7 @@
-package com.rashidsaleem.eventbookingapp.presentation.map.components
+package com.rashidsaleem.eventbookingapp.presentation.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,12 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray11
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray14
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Orange1
 
 @Composable
@@ -44,12 +42,9 @@ fun EventItem(
     bookMarkOnClick: () -> Unit,
     itemOnClick: () -> Unit,
 ) {
-    val configuration = LocalConfiguration.current
 
-    val screenWidth = configuration.screenWidthDp
     Row(
         modifier = modifier
-            .width((screenWidth * 0.85f).dp)
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(16.dp)
@@ -118,10 +113,11 @@ fun EventItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(
+                Image(
                     modifier = Modifier.size(14.dp),
                     painter = painterResource(id = R.drawable.ic_location_on),
                     contentDescription = null,
+//                    tint = Gray14
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 AppText(

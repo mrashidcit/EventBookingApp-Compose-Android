@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
-import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterContainer
+import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterButton
 import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
 import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeTopContainerUiState
@@ -199,7 +199,7 @@ fun TopContainer(
                     }
                 },
                 trailingIcon = {
-                    SearchFilterContainer() {
+                    SearchFilterButton() {
                         onEvent(HomeTopContainerEvent.SearchFilterContainerClick(true))
                     }
                 }

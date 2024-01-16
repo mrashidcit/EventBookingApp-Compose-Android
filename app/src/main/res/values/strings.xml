@@ -58,4 +58,8 @@
     <string name="buy_ticket">Buy Ticket</string>
     <string name="successfully_bookmarked">Successfully Bookmarked</string>
     <string name="find_for_food_or_restaurant_nearby_you">Find for food or restaurant nearby you</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="past_events">Past Events</string>
+    <string name="no_upcoming_event">No Upcoming Event</string>
+    <string name="explore_events">Explore Events</string>
 </resources>

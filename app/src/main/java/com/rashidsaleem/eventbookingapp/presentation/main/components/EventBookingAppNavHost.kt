@@ -37,7 +37,7 @@ fun EventBookingAppNavHost(
             navController = navController,
 //            startDestination = Routes.splash,
             startDestination = Routes.home,
-//            startDestination = Routes.eventDetail,
+//            startDestination = Routes.events,
         ) {
             composable(Routes.splash) {
                 SplashScreen(
