@@ -131,7 +131,18 @@ fun EventBookingAppNavHost(
                 )
             }
             composable(Routes.events) {
-                EventsScreen()
+                EventsScreen(
+                    navigateNext = { route, params ->
+                        val eventJson = params.getString(AppConstants.KEY_EVENT_MODEL, "")
+                        navController.currentBackStackEntry
+                            ?.savedStateHandle
+                            ?.set(AppConstants.KEY_EVENT_MODEL, eventJson)
+                        navController.navigate(route)
+                    },
+                    navigateBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(Routes.map) {
                 MapScreen(

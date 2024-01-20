@@ -46,86 +46,10 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 @Composable
 fun EmptyEvents() {
 
-    val buttonsHorizontalPadding = remember {
-        52.dp
-    }
-    val buttonsVerticalPadding = remember {
-        4.dp
-    }
-
-
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
         val (topTabs, content, bottomButton) = createRefs()
-
-        // TopTabs
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .background(
-                    color = Gray16,
-                    shape = RoundedCornerShape(100.dp)
-                )
-                .padding(
-                    horizontal = 5.dp, vertical = 5.01.dp,
-                )
-                .constrainAs(topTabs) {
-                    top.linkTo(parent.top, 20.12.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    centerHorizontallyTo(parent)
-                }
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = if (true) Color.White else Gray16,
-                        shape = RoundedCornerShape(100.dp)
-                    )
-                    .height(35.04.dp)
-                    .weight(1f)
-                    .padding(
-//                        top = 5.87.dp, bottom = 4.17.dp,
-                        horizontal = 10.dp
-                    ),
-            ) {
-                AppText(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    text = stringResource(id = R.string.upcoming).uppercase(),
-                    fontSize = 15.sp,
-                    lineHeight = 25.sp,
-                    color = if (true) Blue else Gray15,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = if (false) Color.White else Gray16,
-                        shape = RoundedCornerShape(100.dp)
-                    )
-                    .height(35.04.dp)
-                    .weight(1f)
-                    .padding(
-//                        top = 5.87.dp, bottom = 4.17.dp,
-                        horizontal = 10.dp
-                    )
-            ) {
-                AppText(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    text = stringResource(id = R.string.past_events).uppercase(),
-                    fontSize = 15.sp,
-                    lineHeight = 25.sp,
-                    color = if (false) Blue else Gray15,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        }
 
         // Content
         Column(
@@ -163,54 +87,6 @@ fun EmptyEvents() {
                 textAlign = TextAlign.Center
             )
 
-        }
-
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = buttonsHorizontalPadding)
-                .padding(bottom = 33.dp)
-                .constrainAs(bottomButton) {
-                       bottom.linkTo(parent.bottom)
-                       start.linkTo(parent.start)
-                       end.linkTo(parent.end)
-
-                },
-            onClick = {  },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Blue
-            ),
-            shape = RoundedCornerShape(14.dp),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 8.dp
-            ),
-        ) {
-            Row(
-                modifier = Modifier.padding(vertical = buttonsVerticalPadding),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.explore_events).uppercase(),
-                    fontFamily = airbnbCerealFontFamily,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                )
-                Box(
-                    modifier = Modifier
-                        .background(color = Blue1, shape = CircleShape)
-                        .size(30.dp)
-                ) {
-                    Icon(
-                        modifier = Modifier.align(Alignment.Center),
-                        painter = painterResource(id = R.drawable.ic_arrow_right),
-                        contentDescription = null,
-                    )
-                }
-            }
         }
 
     }
