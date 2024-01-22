@@ -1,6 +1,6 @@
 package com.rashidsaleem.eventbookingapp.presentation.home.events
 
-import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 
 sealed class HomeTopContainerEvent {
     object MenuIconClick: HomeTopContainerEvent()

@@ -2,6 +2,7 @@ package com.rashidsaleem.eventbookingapp.presentation.home
 
 import androidx.lifecycle.viewModelScope
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.common.viewmodels.BaseViewModel
 import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeContentEvent

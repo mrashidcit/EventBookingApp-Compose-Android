@@ -62,4 +62,8 @@
     <string name="past_events">Past Events</string>
     <string name="no_upcoming_event">No Upcoming Event</string>
     <string name="explore_events">Explore Events</string>
+    <string name="timeAndDate">Time &amp; Date</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="choose_from_calender">Choose From Calender</string>
 </resources>
