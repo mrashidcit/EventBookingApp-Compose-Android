@@ -1,9 +1,6 @@
 package com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.components
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,40 +33,18 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray22
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray3
 
 @Composable
-fun TimeAndDateContainer() {
+fun LocationContainer() {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
         AppText(
-            textResId = R.string.timeAndDate,
+            textResId = R.string.location,
             fontSize = 16.sp,
             lineHeight = 34.sp,
             fontWeight = FontWeight.Medium,
             color = Black2,
         )
         Spacer(modifier = Modifier.height(12.dp))
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            content = {
-            item {
-                CustomButton(
-                    textResId = R.string.today,
-                ) {}
-            }
-            item {
-                CustomButton(
-                    textResId = R.string.tomorrow,
-                    isSelected = true
-                ) {}
-            }
-            item {
-                CustomButton(
-                    textResId = R.string.tomorrow,
-                ) {}
-            }
-        }
-        )
-        Spacer(modifier = Modifier.height(14.dp))
         Row(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
@@ -86,15 +60,28 @@ fun TimeAndDateContainer() {
             ,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                modifier = Modifier.size(width = 21.dp, height = 23.3.dp),
-                painter = painterResource(id = R.drawable.ic_calendar_2),
-                contentDescription = null,
-                tint = Blue
-            )
+            Box(
+                modifier = Modifier
+                    .size(45.dp)
+                    .clip(RoundedCornerShape(11.89.dp))
+                    .border(
+                        width = 7.dp,
+                        color = Blue.copy(0.15f),
+                        shape = RoundedCornerShape(11.89.dp)
+                    )
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(15.dp)
+                        .align(Alignment.Center),
+                    painter = painterResource(id = R.drawable.ic_location_outlined),
+                    contentDescription = null,
+                    tint = Blue
+                )
+            }
             Spacer(modifier = Modifier.width(13.dp))
             AppText(
-                textResId = R.string.choose_from_calender,
+                text = "New Yourk, USA",
                 fontSize = 15.sp,
                 lineHeight = 25.sp,
                 color = Gray3,
@@ -109,46 +96,12 @@ fun TimeAndDateContainer() {
     }
 }
 
-@Composable
-private fun CustomButton(
-    @StringRes textResId: Int,
-    isSelected: Boolean = false,
-    onClick: () -> Unit,
-) {
-    Box(modifier = Modifier
-        .clip(RoundedCornerShape(10.dp))
-        .then(
-            if (isSelected)
-                Modifier
-                    .background(
-                        color = Blue,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-            else
-                Modifier.border(
-                    width = 1.dp,
-                    color = Gray22,
-                    shape = RoundedCornerShape(10.dp)
-                )
-        )
-        .clickable { }
-        .padding(start = 19.dp, end = 19.dp, top = 9.dp, bottom = 8.dp)
-    ) {
-        AppText(
-            textResId = textResId,
-            fontSize = 15.sp,
-            lineHeight = 25.sp,
-            color = if (isSelected) Color.White else Gray3
-        )
-    }
-}
-
 @Preview
 @Composable
-fun TimeAndDateContainerPreview() {
+fun LocationContainerPreview() {
     EventBookingAppTheme {
         Surface {
-            TimeAndDateContainer()
+            LocationContainer()
         }
     }
 }

@@ -66,4 +66,9 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="choose_from_calender">Choose From Calender</string>
+    <string name="location">Location</string>
+    <string name="select_price_range">Select price range</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="filter">Filter</string>
 </resources>
