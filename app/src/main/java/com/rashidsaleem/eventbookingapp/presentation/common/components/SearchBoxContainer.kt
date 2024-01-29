@@ -36,7 +36,6 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray17
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray18
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBoxContainer(
     modifier: Modifier = Modifier,
@@ -45,12 +44,15 @@ fun SearchBoxContainer(
     onValueChange: (String) -> Unit,
     searchIconColor: Color = Color.White,
     verticalBarColor: Color = Blue4,
-    colors: TextFieldColors = TextFieldDefaults.textFieldColors(
-        textColor = Color.White,
-        containerColor = Color.Transparent,
+    colors: TextFieldColors = TextFieldDefaults.colors(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
         focusedIndicatorColor = Color.Transparent,
-        placeholderColor = Color.White.copy(0.30f),
+        focusedPlaceholderColor = Color.White.copy(0.30f),
+        unfocusedPlaceholderColor = Color.White.copy(0.30f),
     ),
     filterContainerColor: Color = Blue6,
     filterIconColor: Color = Blue5,
@@ -106,7 +108,6 @@ fun SearchBoxContainer(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun SearchBoxContainerPreview() {
@@ -117,12 +118,15 @@ fun SearchBoxContainerPreview() {
                 searchQuery = "abc123",
                 searchIconColor = Blue,
                 verticalBarColor = Blue4,
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = Color.Black,
-                    containerColor = Color.Transparent,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
-                    placeholderColor = Gray17
+                    focusedPlaceholderColor = Gray17,
+                    unfocusedPlaceholderColor = Gray17,
                 ),
                 filterContainerColor = Blue,
                 filterIconColor = Color.White,

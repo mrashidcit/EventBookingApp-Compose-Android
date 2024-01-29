@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogEvent
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterUiState
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.SelectedDateType
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
@@ -37,7 +40,10 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray22
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray3
 
 @Composable
-fun TimeAndDateContainer() {
+fun TimeAndDateContainer(
+    uiState: FilterUiState,
+    onEvent: (FilterDialogEvent) -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -55,18 +61,26 @@ fun TimeAndDateContainer() {
             item {
                 CustomButton(
                     textResId = R.string.today,
-                ) {}
+                    isSelected = uiState.selectedDateType == SelectedDateType.Today
+                ) {
+                   onEvent(FilterDialogEvent.UpdateSelectedDateType(SelectedDateType.Today))
+                }
             }
             item {
                 CustomButton(
                     textResId = R.string.tomorrow,
-                    isSelected = true
-                ) {}
+                    isSelected = uiState.selectedDateType == SelectedDateType.Tomorrow
+                ) {
+                    onEvent(FilterDialogEvent.UpdateSelectedDateType(SelectedDateType.Tomorrow))
+                }
             }
             item {
                 CustomButton(
-                    textResId = R.string.tomorrow,
-                ) {}
+                    textResId = R.string.this_week,
+                    isSelected = uiState.selectedDateType == SelectedDateType.ThisWeek
+                ) {
+                    onEvent(FilterDialogEvent.UpdateSelectedDateType(SelectedDateType.ThisWeek))
+                }
             }
         }
         )
@@ -131,7 +145,7 @@ private fun CustomButton(
                     shape = RoundedCornerShape(10.dp)
                 )
         )
-        .clickable { }
+        .clickable { onClick() }
         .padding(start = 19.dp, end = 19.dp, top = 9.dp, bottom = 8.dp)
     ) {
         AppText(
@@ -148,7 +162,9 @@ private fun CustomButton(
 fun TimeAndDateContainerPreview() {
     EventBookingAppTheme {
         Surface {
-            TimeAndDateContainer()
+            TimeAndDateContainer(
+                uiState = FilterUiState(),
+            ) {}
         }
     }
 }

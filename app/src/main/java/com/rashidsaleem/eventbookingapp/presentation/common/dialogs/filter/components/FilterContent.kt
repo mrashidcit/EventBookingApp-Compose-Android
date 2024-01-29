@@ -2,17 +2,21 @@ package com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.comp
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
@@ -35,6 +39,9 @@ import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppButton
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogEvent
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterUiState
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemModel
 import com.rashidsaleem.eventbookingapp.presentation.common.enums.getDefaultHorizontalItemModelList
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
@@ -44,43 +51,37 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray20
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray24
 
 @Composable
-fun FilterContent() {
-
-    val horizontalItems = remember {
-        getDefaultHorizontalItemModelList().apply {
-            this[0] = this[0].copy(
-                isSelected = true
-            )
-            this[2] = this[2].copy(
-                isSelected = true
-            )
-
-        }
-    }
+fun FilterContent(
+    uiState: FilterUiState,
+    horizontalItems: List<HorizontalItemModel>,
+    onEvent: (FilterDialogEvent) -> Unit,
+) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+//            .fillMaxWidth()
+            .fillMaxSize()
             .clip(
                 RoundedCornerShape(
                     topStart = 38.dp,
                     topEnd = 38.dp,
                 ),
             )
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp)
             .padding(top = 12.dp, bottom = 18.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier
-                .width(26.dp)
-                .height(5.dp)
-                .background(
-                    color = Gray24.copy(0.50f)
-                )
-                .clip(RoundedCornerShape(2.5.dp))
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+//        Box(
+//            modifier = Modifier
+//                .width(26.dp)
+//                .height(5.dp)
+//                .background(
+//                    color = Gray24.copy(0.50f)
+//                )
+//                .clip(RoundedCornerShape(2.5.dp))
+//        )
+//        Spacer(modifier = Modifier.height(12.dp))
         AppText(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.filter),
@@ -88,9 +89,15 @@ fun FilterContent() {
             color = Black,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        HorizontalList(items = horizontalItems)
+        HorizontalList(
+            items = horizontalItems,
+            onEvent = onEvent
+        )
         Spacer(modifier = Modifier.height(26.97.dp))
-        TimeAndDateContainer()
+        TimeAndDateContainer(
+            uiState = uiState,
+            onEvent = onEvent,
+        )
         Spacer(modifier = Modifier.height(26.dp))
         LocationContainer()
         Spacer(modifier = Modifier.height(24.dp))
@@ -101,7 +108,11 @@ fun FilterContent() {
             modifier = Modifier.fillMaxWidth()
         ) {
             AppButton(
-                modifier = Modifier.weight(0.7f),
+                modifier = Modifier
+                    .weight(0.7f)
+                    .clickable {
+                        onEvent(FilterDialogEvent.Reset)
+                    },
                 text = stringResource(id = R.string.reset).uppercase(),
                 textFontSize = 16.sp,
                 textFontWeight = FontWeight.Medium,
@@ -123,7 +134,11 @@ fun FilterContent() {
             }
             Spacer(modifier = Modifier.width(19.dp))
             AppButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable {
+                        onEvent(FilterDialogEvent.Apply)
+                    },
                 text = stringResource(id = R.string.apply).uppercase(),
                 textColor = Color.White,
                 textFontSize = 16.sp,
@@ -144,6 +159,7 @@ fun FilterContent() {
 
             }
         }
+        Spacer(modifier = Modifier.height(18.dp))
     }
 }
 
@@ -152,7 +168,23 @@ fun FilterContent() {
 fun FilterContentPreview() {
     EventBookingAppTheme {
         Surface {
-            FilterContent()
+
+            val horizontalItems = remember {
+                getDefaultHorizontalItemModelList().apply {
+                    this[0] = this[0].copy(
+                        isSelected = true
+                    )
+                    this[2] = this[2].copy(
+                        isSelected = true
+                    )
+
+                }
+            }
+            FilterContent(
+                uiState = FilterUiState(),
+                horizontalItems = horizontalItems,
+                onEvent = { }
+            )
         }
     }
 }

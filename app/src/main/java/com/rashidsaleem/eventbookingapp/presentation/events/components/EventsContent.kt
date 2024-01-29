@@ -138,12 +138,15 @@ fun EventsContent(
                     searchQuery = uiState.searchQuery,
                     searchIconColor = Blue,
                     verticalBarColor = Blue4,
-                    colors = TextFieldDefaults.textFieldColors(
-                        textColor = Color.Black,
-                        containerColor = Color.Transparent,
+                    colors = TextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
-                        placeholderColor = Gray17
+                        focusedPlaceholderColor = Gray17,
+                        unfocusedPlaceholderColor = Gray17
                     ),
                     filterContainerColor = Blue,
                     filterIconColor = Color.White,

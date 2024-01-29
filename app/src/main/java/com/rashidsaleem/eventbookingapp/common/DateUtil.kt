@@ -4,6 +4,8 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
+import kotlin.math.abs
 
 object DateUtil {
 
@@ -35,5 +37,43 @@ object DateUtil {
         }
     }
 
+    /**
+     * Provide the date of Week 1st Day and Last Day ( for a given date in @param )
+     * @param date - provide any date
+     *
+     * @return A [List<Date>] in which
+     *      index 0 contains Week 1st Day Date
+     *      index 1 contain Week last Day Date
+     *      or Empty list in case of @param date is null or not valid
+     */
+    fun getWeek1stDayAndLastDayDate(date: Date?): List<Date> {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        return try {
+            val firstDayOfWeek = calendar.firstDayOfWeek
+            val todayDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            val dateOfFirstDayOfWeek = calendar.let {
+                val daysDifference = abs(todayDayOfWeek - firstDayOfWeek)
+                it.add(Calendar.DATE, - daysDifference)
+                val date = it.time
+                it.add(Calendar.DATE, daysDifference) // Resetting back to Today
+                date
+            }
+            val dateOfLastDayOfWeek = calendar.let {
+                val daysDifference = abs(Calendar.SATURDAY - todayDayOfWeek)
+                it.add(Calendar.DATE, daysDifference)
+                val date = it.time
+                it.add(Calendar.DATE, - daysDifference)
+                date
+            }
+            listOf(
+                dateOfFirstDayOfWeek,
+                dateOfLastDayOfWeek
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            listOf()
+        }
+    }
 
 }

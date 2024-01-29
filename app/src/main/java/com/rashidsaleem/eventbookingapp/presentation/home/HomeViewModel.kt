@@ -75,7 +75,7 @@ class HomeViewModel: BaseViewModel() {
     private fun showSearchFilterContainer(value: Boolean) {
         _topContainerUiState.update {
             it.copy(
-                showSearchFilterContainer = value
+                showFilterContainer = value
             )
         }
     }

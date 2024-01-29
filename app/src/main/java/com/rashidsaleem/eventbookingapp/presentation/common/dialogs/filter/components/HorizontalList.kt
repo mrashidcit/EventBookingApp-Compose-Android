@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogEvent
 import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemModel
 import com.rashidsaleem.eventbookingapp.presentation.common.enums.getDefaultHorizontalItemModelList
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
@@ -35,19 +36,28 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray21
 
 @Composable
 fun HorizontalList(
-    items: List<HorizontalItemModel>
+    items: List<HorizontalItemModel>,
+    onEvent: (FilterDialogEvent) -> Unit,
 ) {
-    LazyRow(content = {
-        items(items.size) { index ->
-            val item = items[index]
-            ItemComponent(
-                item = item,
-                onClick = {
-
-                }
-            )
-        }
-    })
+    LazyRow(
+        content = {
+            items(items.size) { index ->
+                val item = items[index]
+                ItemComponent(
+                    item = item,
+                    onClick = {
+                        val isSelectedTargetValue = !item.isSelected
+                        onEvent(
+                            FilterDialogEvent.UpdateHorizontalItemIsSelected(
+                                value = isSelectedTargetValue,
+                                item = item
+                            ),
+                        )
+                    }
+                )
+            }
+        },
+    )
 }
 
 @Composable
@@ -129,7 +139,8 @@ fun HorizontalListPreview() {
             }
 
             HorizontalList(
-                items = items
+                items = items,
+                onEvent = { }
             )
         }
     }

@@ -5,11 +5,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -19,7 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,6 +42,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogView
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.listOfBottomNavItems
 import com.rashidsaleem.eventbookingapp.presentation.home.components.HomeContent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.drawer.DrawerContent
@@ -44,7 +54,7 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppThe
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -57,6 +67,10 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     val topContainerUiState by viewModel.topContainerUiState.collectAsState()
     val homeContentUiState by viewModel.homeContentUiState.collectAsState()
+    val sheetState = androidx.compose.material3.rememberModalBottomSheetState(
+        skipPartiallyExpanded = false
+    )
+    val _scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -166,7 +180,7 @@ fun HomeScreen(
                 )
             },
             floatingActionButtonPosition = FabPosition.End,
-            ) { contentPadding ->
+        ) { contentPadding ->
             // Screen content
             HomeContent(
                 modifier = Modifier.padding(contentPadding),
@@ -190,6 +204,35 @@ fun HomeScreen(
                 homeContentOnEvent = { viewModel.homeContentOnEvent(it) }
 
             )
+
+            // FilterDialog
+            if (topContainerUiState.showFilterContainer) {
+                ModalBottomSheet(
+                    onDismissRequest = {
+                        viewModel.topContainerOnEvent(
+                            HomeTopContainerEvent.SearchFilterContainerClick(
+                                false
+                            )
+                        )
+                    },
+                    sheetState = sheetState
+                ) {
+                    // Sheet content
+                    FilterDialogView(
+                        showDialog = {
+                            _scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                if (!sheetState.isVisible) {
+                                    viewModel.topContainerOnEvent(
+                                        HomeTopContainerEvent.SearchFilterContainerClick(
+                                            false
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
         }
 
     }
@@ -205,7 +248,7 @@ fun HomeScreenPreview() {
             val navController = rememberNavController()
             HomeScreen(
                 navController = navController,
-                navigateNext = { route , event -> },
+                navigateNext = { route, event -> },
                 navigateBack = {},
             )
         }

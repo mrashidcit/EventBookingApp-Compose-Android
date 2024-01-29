@@ -169,9 +169,11 @@ fun TopContainer(
                         color = Color.White.copy(0.30f),
                     )
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = Color.White,
-                    containerColor = Color.Transparent,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                 ),
