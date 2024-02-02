@@ -23,7 +23,12 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DateRangePicker
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppButton
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
@@ -49,13 +55,63 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray20
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray24
+import java.util.Date
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.kizitonwose.calendar.core.daysOfWeek
+import java.time.LocalDate
+import java.time.YearMonth
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterContent(
     uiState: FilterUiState,
     horizontalItems: List<HorizontalItemModel>,
     onEvent: (FilterDialogEvent) -> Unit,
 ) {
+
+    var dateRangePickerState = rememberDateRangePickerState()
+
+    if (uiState.showDateRangeSelectionDialog) {
+        DatePickerDialog(
+            onDismissRequest = {
+                val startDate = dateRangePickerState
+                    .selectedStartDateMillis
+                    ?.let {
+                        Date(it)
+                    }
+                val endDate = dateRangePickerState
+                    .selectedEndDateMillis
+                    ?.let {
+                        Date(it)
+                    }
+                onEvent(FilterDialogEvent.UpdateDateRange(startDate, endDate))
+                onEvent(FilterDialogEvent.ShowDateRangeSelectionDialog(false))
+            },
+            confirmButton = {
+                onEvent(FilterDialogEvent.ShowDateRangeSelectionDialog(false))
+            }
+        ) {
+            DateRangePicker(
+                state = dateRangePickerState,
+
+                )
+        }
+    }
+
+//    val currentMonth = remember { YearMonth.now() }
+//    val startMonth = remember { currentMonth }
+//    val endMonth = remember { currentMonth.plusMonths(12) }
+//    val today = remember { LocalDate.now() }
+//    var selection by remember { mutableStateOf(DateSelection()) }
+//    val daysOfWeek = remember { daysOfWeek() }
+//
+//
+//    Dialog(onDismissRequest = { /*TODO*/ }) {
+//
+////        datepicker(
+////
+////        )
+//    }
 
     Column(
         modifier = Modifier

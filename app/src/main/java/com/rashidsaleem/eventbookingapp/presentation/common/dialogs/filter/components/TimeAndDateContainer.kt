@@ -18,12 +18,18 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DateRangePicker
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,11 +45,13 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppThe
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray22
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray3
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimeAndDateContainer(
     uiState: FilterUiState,
     onEvent: (FilterDialogEvent) -> Unit,
 ) {
+
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -93,6 +101,9 @@ fun TimeAndDateContainer(
                     color = Gray22,
                     shape = RoundedCornerShape(10.dp),
                 )
+                .clickable {
+                    onEvent(FilterDialogEvent.ShowDateRangeSelectionDialog(true))
+                }
                 .padding(
                     horizontal = 14.dp,
                     vertical = 9.dp,
@@ -100,27 +111,39 @@ fun TimeAndDateContainer(
             ,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                modifier = Modifier.size(width = 21.dp, height = 23.3.dp),
-                painter = painterResource(id = R.drawable.ic_calendar_2),
-                contentDescription = null,
-                tint = Blue
-            )
-            Spacer(modifier = Modifier.width(13.dp))
-            AppText(
-                textResId = R.string.choose_from_calender,
-                fontSize = 15.sp,
-                lineHeight = 25.sp,
-                color = Gray3,
-            )
-            Spacer(modifier = Modifier.width(14.dp))
-            Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_forward_ios),
-                contentDescription = null,
-                tint = Blue,
+            ChooseFromCalendarLabel(
+                if (uiState.isEndDateSelected())
+                    uiState.dateRangeLabelForDisplay()
+                else
+                    stringResource(id = R.string.choose_from_calender)
             )
         }
     }
+}
+
+@Composable
+private fun ChooseFromCalendarLabel(
+    label: String = stringResource(id = R.string.choose_from_calender)
+) {
+    Icon(
+        modifier = Modifier.size(width = 21.dp, height = 23.3.dp),
+        painter = painterResource(id = R.drawable.ic_calendar_2),
+        contentDescription = null,
+        tint = Blue
+    )
+    Spacer(modifier = Modifier.width(13.dp))
+    AppText(
+        text = label,
+        fontSize = 15.sp,
+        lineHeight = 25.sp,
+        color = Gray3,
+    )
+    Spacer(modifier = Modifier.width(14.dp))
+    Icon(
+        painter = painterResource(id = R.drawable.ic_arrow_forward_ios),
+        contentDescription = null,
+        tint = Blue,
+    )
 }
 
 @Composable

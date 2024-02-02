@@ -65,6 +65,25 @@ class FilterViewModel @Inject constructor() : BaseViewModel() {
             FilterDialogEvent.Reset -> {}
             is FilterDialogEvent.UpdateHorizontalItemIsSelected -> updateHorizontalItemIsSelected(event.value, event.item)
             is FilterDialogEvent.UpdateSelectedDateType -> updateSelectedDateType(event.value)
+            is FilterDialogEvent.ShowDateRangeSelectionDialog -> showDateRangeSelectionDialog(event.value)
+            is FilterDialogEvent.UpdateDateRange -> updateDateRange(event.startDate, event.endDate)
+        }
+    }
+
+    private fun updateDateRange(startDate: Date?, endDate: Date?) {
+        _uiState.update {
+            it.copy(
+                startDate = startDate,
+                endDate = endDate,
+            )
+        }
+    }
+
+    private fun showDateRangeSelectionDialog(value: Boolean) {
+        _uiState.update {
+            it.copy(
+                showDateRangeSelectionDialog = value
+            )
         }
     }
 

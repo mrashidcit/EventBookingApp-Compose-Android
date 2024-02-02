@@ -5,10 +5,10 @@
       <entry key="EmptyEventsPreview">
         <State />
       </entry>
-      <entry key="EventDetailContentPreview">
+      <entry key="EventsListPreview">
         <State />
       </entry>
-      <entry key="EventsListPreview">
+      <entry key="FilterContentPreview">
         <State />
       </entry>
       <entry key="MapViewContentPreview">

@@ -13,6 +13,7 @@ object DateUtil {
 
     const val ddMMMCommayyyy = "dd MMMM, yyyy" // e.g 14 December, 2024
     const val EEEECommaHHmma = "EEEE, hh:mma" // Tuesday, 4:00PM - 9:00PM
+    const val MMMDashyyyy = "MMM-yyyy" // e.g 14 December, 2024
     const val HHmma = "hh:mma" // 9:00PM
 
     fun getDay(date: Date?): String? {

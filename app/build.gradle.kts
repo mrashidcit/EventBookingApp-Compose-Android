@@ -35,6 +35,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -104,6 +105,11 @@ dependencies {
 //    kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
+
+    // compose dialog
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    implementation("com.kizitonwose.calendar:compose:2.4.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
 
 }
