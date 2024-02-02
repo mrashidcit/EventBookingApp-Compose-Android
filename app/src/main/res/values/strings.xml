@@ -72,4 +72,6 @@
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="this_week">This week</string>
+    <string name="following">Following</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>
