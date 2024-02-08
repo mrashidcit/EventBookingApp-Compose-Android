@@ -74,4 +74,8 @@
     <string name="this_week">This week</string>
     <string name="following">Following</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="about_me">About Me</string>
+    <string name="read_more">Read More</string>
+    <string name="interest">Interest</string>
+    <string name="change">Change</string>
 </resources>

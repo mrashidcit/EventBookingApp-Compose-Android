@@ -7,7 +7,21 @@ data class UserModel(
     val following: Int,
     val followers: Int,
     val aboutMe: String,
-    val interests: List<String>
+    val interests: List<InterestModel>
 ) {
     fun getFullName(): String = ("$firstName $lastName")
+
+    companion object {
+        fun emptyUser(): UserModel {
+            return UserModel(
+                firstName = "",
+                lastName = "",
+                pic = "",
+                following = 0,
+                followers = 0,
+                aboutMe = "",
+                interests = listOf()
+            )
+        }
+    }
 }

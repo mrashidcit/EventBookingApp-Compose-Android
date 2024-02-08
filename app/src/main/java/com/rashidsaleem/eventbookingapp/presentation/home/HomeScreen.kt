@@ -43,6 +43,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogView
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.listOfBottomNavItems
 import com.rashidsaleem.eventbookingapp.presentation.home.components.HomeContent
 import com.rashidsaleem.eventbookingapp.presentation.home.components.drawer.DrawerContent
@@ -87,7 +88,9 @@ fun HomeScreen(
             DrawerContent(
                 onClick = { value ->
                     when (value) {
-                        DrawerEnum.ProfileIcon -> {}
+                        DrawerEnum.ProfileIcon -> {
+                            navigateNext(Routes.profile, null)
+                        }
                         DrawerEnum.MyProfile -> {}
                         DrawerEnum.Message -> {}
                         DrawerEnum.Calendar -> {}

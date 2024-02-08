@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +31,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.home.UserModel
+import com.rashidsaleem.eventbookingapp.domain.models.home.dummyInterests
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileUiState
@@ -44,9 +48,10 @@ fun ProfileContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Gray12),
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         TopAppBar(
             leadingIconId = R.drawable.ic_arrow_left,
             contentColor = Color.Black,
@@ -57,8 +62,14 @@ fun ProfileContent(
         )
         Spacer(modifier = Modifier.height(29.dp))
         TopContainer(uiState)
-
-
+        BottomContainer(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp)
+            ,
+            uiState = uiState
+        )
     }
 
 }
@@ -76,8 +87,8 @@ fun ProfileContentPreview() {
             pic = "https://raw.githubusercontent.com/mrashidcit/EventBookingApp-Compose-Android/ui/app/src/main/res/drawable/img_going_3.png",
             following = 350,
             followers = 346,
-            aboutMe = "",
-            interests = listOf()
+            aboutMe = "Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.",
+            interests = dummyInterests()
         )
     )
 
