@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,15 +27,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.common.enums.ProfileTypeEnum
 import com.rashidsaleem.eventbookingapp.domain.models.home.UserModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppButton
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
+import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileEvent
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
@@ -43,8 +47,13 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray25
 
 @Composable
-fun TopContainer(uiState: ProfileUiState) {
+fun TopContainer(
+    modifier: Modifier = Modifier,
+    uiState: ProfileUiState,
+    onEvent: (ProfileEvent) -> Unit
+) {
     Column(
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
@@ -69,41 +78,122 @@ fun TopContainer(uiState: ProfileUiState) {
         Spacer(modifier = Modifier.height(9.dp))
         UserTextInfoContainer(uiState.user)
         Spacer(modifier = Modifier.height(22.dp))
-        Button(
-            shape = RoundedCornerShape(8.dp),
-            onClick = {},
-            colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = Color.White,
-            ),
-            border = BorderStroke(
-                width = 1.dp,
-                color = Blue
-            )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+        if (uiState.profileType == ProfileTypeEnum.My) {
+            Button(
+                shape = RoundedCornerShape(8.dp),
+                onClick = {
+                    onEvent(ProfileEvent.EditProfile)
+                },
+                colors = ButtonDefaults.outlinedButtonColors(
+                    backgroundColor = Color.White,
+                ),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = Blue
+                )
             ) {
-                Icon(
-                    modifier = Modifier.size(22.dp),
-                    painter = painterResource(id = R.drawable.ic_edit_profile),
-                    contentDescription = stringResource(id = R.string.edit_profile),
-                    tint = Blue,
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                AppText(
-                    textResId = R.string.edit_profile,
-                    fontSize = 16.sp,
-                    lineHeight = 25.sp,
-                    color = Blue,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        modifier = Modifier.size(22.dp),
+                        painter = painterResource(id = R.drawable.ic_edit_profile),
+                        contentDescription = stringResource(id = R.string.edit_profile),
+                        tint = Blue,
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    AppText(
+                        textResId = R.string.edit_profile,
+                        fontSize = 16.sp,
+                        lineHeight = 25.sp,
+                        color = Blue,
+                    )
+                }
+            }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Button(
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp),
+                    onClick = {
+                        onEvent(ProfileEvent.EditProfile)
+                    },
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        backgroundColor = Blue,
+                    ),
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Blue
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(22.dp),
+                            painter = painterResource(id = R.drawable.ic_follow),
+                            contentDescription = stringResource(id = R.string.follow),
+                            tint = Color.White,
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        AppText(
+                            textResId = R.string.follow,
+                            fontSize = 16.sp,
+                            lineHeight = 25.sp,
+                            color = Color.White,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Button(
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp),
+                    onClick = {
+                        onEvent(ProfileEvent.EditProfile)
+                    },
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        backgroundColor = Color.White,
+                    ),
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Blue
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(22.dp),
+                            painter = painterResource(id = R.drawable.ic_message),
+                            contentDescription = stringResource(id = R.string.messages),
+                            tint = Blue,
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        AppText(
+                            textResId = R.string.messages,
+                            fontSize = 16.sp,
+                            lineHeight = 25.sp,
+                            color = Blue,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
             }
         }
+
 
     }
 }
 
 @Composable
-private fun UserTextInfoContainer(user: UserModel) {
+private fun UserTextInfoContainer(
+    user: UserModel,
+    ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -166,10 +256,16 @@ fun TopContainerPreview() {
                     followers = 346,
                     aboutMe = "",
                     interests = listOf()
-                )
+                ),
+                profileType = ProfileTypeEnum.Organizer
             )
 
-            TopContainer(uiState = uiState)
+            TopContainer(
+                uiState = uiState,
+                onEvent = {
+
+                }
+            )
         }
     }
 }

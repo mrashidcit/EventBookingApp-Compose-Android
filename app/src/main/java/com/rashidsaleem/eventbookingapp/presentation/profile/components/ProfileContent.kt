@@ -1,49 +1,35 @@
 package com.rashidsaleem.eventbookingapp.presentation.profile.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.common.enums.ProfileTypeEnum
 import com.rashidsaleem.eventbookingapp.domain.models.home.UserModel
 import com.rashidsaleem.eventbookingapp.domain.models.home.dummyInterests
-import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
+import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileEvent
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileUiState
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
+import com.rashidsaleem.eventbookingapp.presentation.profile.components.bottomContainer.BottomContainer
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray12
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray25
 
 @Composable
 fun ProfileContent(
     uiState: ProfileUiState,
+    onEvent: (ProfileEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -57,18 +43,23 @@ fun ProfileContent(
             contentColor = Color.Black,
             text = stringResource(id = R.string.profile),
             leadingIconOnClick = {
-
+                onEvent(ProfileEvent.NavigateBack)
             },
         )
         Spacer(modifier = Modifier.height(29.dp))
-        TopContainer(uiState)
+        TopContainer(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            uiState = uiState,
+            onEvent = onEvent,
+        )
         BottomContainer(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
             ,
-            uiState = uiState
+            uiState = uiState,
+            onEvent = onEvent
         )
     }
 
@@ -89,13 +80,15 @@ fun ProfileContentPreview() {
             followers = 346,
             aboutMe = "Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.",
             interests = dummyInterests()
-        )
+        ),
+        profileType = ProfileTypeEnum.Organizer,
     )
 
     EventBookingAppTheme {
         Surface {
             ProfileContent(
                 uiState = uiState,
+                onEvent = {}
             )
         }
     }

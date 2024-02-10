@@ -1,6 +1,6 @@
 package com.rashidsaleem.eventbookingapp.common.enums
 
-enum class DataState {
+enum class DataStateEnum {
     Initial,
     Loading,
     Completed,

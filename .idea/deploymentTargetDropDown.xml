@@ -5,13 +5,13 @@
       <entry key="EmptyEventsPreview">
         <State />
       </entry>
-      <entry key="EventsListPreview">
-        <State />
-      </entry>
       <entry key="FilterContentPreview">
         <State />
       </entry>
       <entry key="MapViewContentPreview">
+        <State />
+      </entry>
+      <entry key="ProfileContentPreview">
         <State />
       </entry>
       <entry key="SelectPriceRangeContainerPreview">

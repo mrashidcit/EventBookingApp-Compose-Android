@@ -78,4 +78,9 @@
     <string name="read_more">Read More</string>
     <string name="interest">Interest</string>
     <string name="change">Change</string>
+    <string name="change_interest">Change Interest</string>
+    <string name="messages">Messages</string>
+    <string name="about">About</string>
+    <string name="event">Event</string>
+    <string name="reviews">Reviews</string>
 </resources>
