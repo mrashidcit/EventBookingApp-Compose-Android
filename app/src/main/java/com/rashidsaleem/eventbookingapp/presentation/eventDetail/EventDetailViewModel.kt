@@ -1,6 +1,7 @@
 package com.rashidsaleem.eventbookingapp.presentation.eventDetail
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -8,12 +9,16 @@ import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.common.AppUtil
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
+import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
 import com.rashidsaleem.eventbookingapp.presentation.common.viewmodels.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +33,9 @@ class EventDetailViewModel @Inject constructor(
     private val _scope = viewModelScope
     private val _uiState: MutableStateFlow<EventDetailState> = MutableStateFlow<EventDetailState>(EventDetailState())
     val uiState: StateFlow<EventDetailState> = _uiState.asStateFlow()
+
+    private val _eventFlow: MutableSharedFlow<UiEvent> = MutableSharedFlow<UiEvent>()
+    val eventFlow: SharedFlow<UiEvent> = _eventFlow.asSharedFlow()
 
     init {
     }
@@ -68,12 +76,18 @@ class EventDetailViewModel @Inject constructor(
 
     }
 
-    private fun navigateBack() {
-
+    private fun navigateBack() = _scope.launch {
+        _eventFlow.emit(UiEvent.NavigateBack)
     }
 
-    private fun organizerProfileDetail() {
-
+    private fun organizerProfileDetail() = viewModelScope.launch {
+        val profileId: Int = 2
+        val params = bundleOf().apply {
+            putInt(AppConstants.KEY_PROFILE_ID, profileId)
+        }
+        launch(Dispatchers.Main) {
+            _eventFlow.emit(UiEvent.NavigateNext(Routes.profile, params))
+        }
     }
 
     private fun plusGoingPersons(event: EventModel) {

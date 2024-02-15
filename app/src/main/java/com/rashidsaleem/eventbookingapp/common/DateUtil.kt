@@ -4,7 +4,6 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 import kotlin.math.abs
 
 object DateUtil {
@@ -12,6 +11,7 @@ object DateUtil {
     private const val TAG = "DateUtil"
 
     const val ddMMMCommayyyy = "dd MMMM, yyyy" // e.g 14 December, 2024
+    const val ddMMM = "dd MMM" // e.g 14 Dec
     const val EEEECommaHHmma = "EEEE, hh:mma" // Tuesday, 4:00PM - 9:00PM
     const val MMMDashyyyy = "MMM-yyyy" // e.g 14 December, 2024
     const val HHmma = "hh:mma" // 9:00PM
@@ -26,6 +26,16 @@ object DateUtil {
         if (date == null) return null
         val dateFormat: SimpleDateFormat  = SimpleDateFormat("MMM")
         return dateFormat.format(date)
+    }
+
+    fun toString(dateInMillieseconds: Long, format: String = ddMMMCommayyyy): String? {
+        val date = try {
+            Date(dateInMillieseconds)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+        return toString(date, format)
     }
 
     fun toString(date: Date?, format: String = ddMMMCommayyyy): String? {

@@ -1,5 +1,6 @@
 package com.rashidsaleem.eventbookingapp.presentation.home
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,12 +36,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogView
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
@@ -60,7 +63,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    navigateNext: (String, EventModel?) -> Unit,
+    navigateNext: (String, Bundle?) -> Unit,
     navigateBack: () -> Unit,
 ) {
 
@@ -76,7 +79,7 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route, event.event)
+                is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route, event.params)
                 HomeViewModel.UiEvent.NavigateBack -> navigateBack()
             }
         }
@@ -89,7 +92,10 @@ fun HomeScreen(
                 onClick = { value ->
                     when (value) {
                         DrawerEnum.ProfileIcon -> {
-                            navigateNext(Routes.profile, null)
+                            val params = bundleOf().apply {
+                                putInt(AppConstants.KEY_PROFILE_ID, 1)
+                            }
+                            navigateNext(Routes.profile, params)
                         }
                         DrawerEnum.MyProfile -> {}
                         DrawerEnum.Message -> {}
@@ -251,7 +257,7 @@ fun HomeScreenPreview() {
             val navController = rememberNavController()
             HomeScreen(
                 navController = navController,
-                navigateNext = { route, event -> },
+                navigateNext = { route, params -> },
                 navigateBack = {},
             )
         }

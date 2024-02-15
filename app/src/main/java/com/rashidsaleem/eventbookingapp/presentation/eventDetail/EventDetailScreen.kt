@@ -15,13 +15,14 @@ import androidx.core.os.bundleOf
 import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.presentation.common.components.BaseScreen
 import com.rashidsaleem.eventbookingapp.presentation.eventDetail.components.EventDetailContent
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun EventDetailScreen(
     viewModel: EventDetailViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     bundle: Bundle,
     navigateBack: () -> Unit,
-    navigateNext: (String) -> Unit,
+    navigateNext: (String, Bundle?) -> Unit,
 ) {
 
     val baseUiState by viewModel.baseUiState.collectAsState()
@@ -29,6 +30,14 @@ fun EventDetailScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.updateData(bundle)
+
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                EventDetailViewModel.UiEvent.NavigateBack -> navigateBack()
+                is EventDetailViewModel.UiEvent.NavigateNext ->
+                    navigateNext(event.route, event.params)
+            }
+        }
     }
 
     BaseScreen(baseUiState = baseUiState) {

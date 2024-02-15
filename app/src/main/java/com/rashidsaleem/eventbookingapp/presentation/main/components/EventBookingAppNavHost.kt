@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.gson.Gson
 import com.rashidsaleem.eventbookingapp.common.AppConstants
+import com.rashidsaleem.eventbookingapp.common.enums.ProfileTypeEnum
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.codeVerification.CodeVerificationScreen
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
@@ -82,17 +83,17 @@ fun EventBookingAppNavHost(
             composable(Routes.home) {
                 HomeScreen(
                     navController = navController,
-                    navigateNext = { route, event ->
+                    navigateNext = { route, params ->
                         navController
                             .currentBackStackEntry
                             ?.savedStateHandle?.apply {
-                                val gson = Gson()
-                                val eventJson = try {
-                                    gson.toJson(event, EventModel::class.java)
-                                } catch (ex: Exception) {
-                                    ""
+                                params?.let {
+                                    val eventModelJson = it.getString(AppConstants.KEY_EVENT_MODEL) ?: ""
+                                    val userId = it.getInt(AppConstants.KEY_PROFILE_ID, -1)
+
+                                    this.set<String>(AppConstants.KEY_EVENT_MODEL, eventModelJson)
+                                    this.set<Int>(AppConstants.KEY_PROFILE_ID, userId)
                                 }
-                                set<String>(AppConstants.KEY_EVENT_MODEL, eventJson)
                             }
                         navController.navigate(route)
                     },
@@ -164,7 +165,29 @@ fun EventBookingAppNavHost(
                 )
             }
             composable(Routes.profile) {
-                ProfileScreen()
+                val params = bundleOf()
+                navController
+                    .previousBackStackEntry
+                    ?.savedStateHandle?.let { savedStateHandle ->
+                        val profileId = savedStateHandle.get<Int>(AppConstants.KEY_PROFILE_ID) ?: -1
+                        val profileType = savedStateHandle
+                            .get<ProfileTypeEnum>(AppConstants.KEY_PROFILE_TYPE)
+                            ?: ProfileTypeEnum.My
+                        params.putInt(AppConstants.KEY_PROFILE_ID, profileId)
+                        params.putSerializable(AppConstants.KEY_PROFILE_TYPE, profileType)
+
+//                        val temp = params.getSerializable(AppConstants.KEY_PROFILE_TYPE) as ProfileTypeEnum?
+//                        Log.d(TAG, "EventBookingAppNavHost: profileTypeEnum = ${temp?.name}")
+                    }
+                ProfileScreen(
+                    params = params,
+                    navigateNext = { route, params ->
+
+                    },
+                    navigateBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(Routes.notifications) {
                 NotificationsScreen()
@@ -178,8 +201,19 @@ fun EventBookingAppNavHost(
                 }
                 EventDetailScreen(
                     bundle = bundle,
-                    navigateBack = {},
-                    navigateNext = { route ->
+                    navigateBack = { navController.popBackStack() },
+                    navigateNext = { route, params ->
+                        params?.let {
+                            val profileId = it.getInt(AppConstants.KEY_PROFILE_ID, -1)
+                            if (profileId != -1) {
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.apply {
+                                        set(AppConstants.KEY_PROFILE_ID, profileId)
+                                        set(AppConstants.KEY_PROFILE_TYPE, ProfileTypeEnum.My)
+                                    }
+                            }
+                        }
                         navController.navigate(route)
                     }
                 )

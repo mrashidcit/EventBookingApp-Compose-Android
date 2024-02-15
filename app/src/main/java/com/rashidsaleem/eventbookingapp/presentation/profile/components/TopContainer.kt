@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -58,7 +59,7 @@ fun TopContainer(
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data("https://example.com/image.jpg")
+                .data(uiState.user.pic)
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.ic_person),
@@ -217,6 +218,7 @@ private fun UserTextInfoContainer(
         }
         Box(
             modifier = Modifier
+                .padding(horizontal = 20.dp)
                 .height(32.dp)
                 .width(1.dp)
                 .background(color = Gray25)
@@ -249,6 +251,7 @@ fun TopContainerPreview() {
         Surface {
             val uiState = ProfileUiState(
                 user = UserModel(
+                    id = 1,
                     firstName = "Ashfak",
                     lastName = "Sayem",
                     pic = "https://raw.githubusercontent.com/mrashidcit/EventBookingApp-Compose-Android/ui/app/src/main/res/drawable/img_going_3.png",

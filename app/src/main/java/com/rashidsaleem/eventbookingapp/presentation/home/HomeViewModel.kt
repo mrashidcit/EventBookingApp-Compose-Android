@@ -1,6 +1,12 @@
 package com.rashidsaleem.eventbookingapp.presentation.home
 
+import android.os.Bundle
+import android.util.Log
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
@@ -21,6 +27,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel: BaseViewModel() {
+
+    private val TAG = "HomeViewModel"
 
     private val _scope = viewModelScope
     private val _topContainerUiState: MutableStateFlow<HomeTopContainerUiState> = MutableStateFlow(HomeTopContainerUiState())
@@ -111,7 +119,16 @@ class HomeViewModel: BaseViewModel() {
     }
 
     private fun eventCardOnClick(value: EventModel) = _scope.launch(Dispatchers.Main) {
-        _eventFlow.emit(UiEvent.NavigateNext(Routes.eventDetail, value))
+        val eventModelJson = try {
+            Gson().toJson(value, EventModel::class.java)
+        } catch (e: Exception) {
+            Log.e(TAG, e.stackTraceToString())
+            ""
+        }
+        val params = bundleOf().apply {
+            putString(AppConstants.KEY_EVENT_MODEL, eventModelJson)
+        }
+        _eventFlow.emit(UiEvent.NavigateNext(Routes.eventDetail, params))
     }
 
     private fun eventBookmarkOnClick(value: EventModel) {
@@ -123,7 +140,7 @@ class HomeViewModel: BaseViewModel() {
     }
 
     sealed class UiEvent {
-        data class NavigateNext(val route: String, val event: EventModel? = null): UiEvent()
+        data class NavigateNext(val route: String, val params: Bundle? = null): UiEvent()
         object NavigateBack: UiEvent()
     }
 

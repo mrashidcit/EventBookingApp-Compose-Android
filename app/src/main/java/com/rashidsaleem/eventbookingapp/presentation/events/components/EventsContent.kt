@@ -35,16 +35,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
+import com.rashidsaleem.eventbookingapp.presentation.common.components.AppEventsList
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.common.components.EventItem
 import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchBoxContainer
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
+import com.rashidsaleem.eventbookingapp.presentation.common.events.EventsListUiEvent
+import com.rashidsaleem.eventbookingapp.presentation.eventDetail.EventDetailEvent
 import com.rashidsaleem.eventbookingapp.presentation.events.EventsUiComponent
 import com.rashidsaleem.eventbookingapp.presentation.events.EventsUiEvent
 import com.rashidsaleem.eventbookingapp.presentation.events.EventsUiState
@@ -53,7 +57,6 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue1
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue4
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray13
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray15
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray16
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray17
@@ -61,7 +64,6 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray18
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray19
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventsContent(
     uiState: EventsUiState,
@@ -249,27 +251,22 @@ fun EventsContent(
             }
             when {
                 (eventsList.isNotEmpty()) -> {
-                    LazyColumn(
+                    AppEventsList(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = Gray19)
-                            .weight(1f)
-                            .padding(horizontalPadding),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        items(eventsList.size) { index ->
-                            val event = eventsList[index]
-                            EventItem(
-                                modifier = Modifier.fillMaxWidth(),
-                                bookMarkOnClick = {
-                                    onEvent(EventsUiEvent.BookmarkOnClick(event))
-                                },
-                                itemOnClick = {
-                                    onEvent(EventsUiEvent.EventItemOnClick(event))
-                                }
-                            )
-                        }
-                    }
+                            .weight(1f),
+                        horizontalPadding = horizontalPadding,
+                        eventsList = eventsList,
+                        onEvent = { event ->
+                              when (event) {
+                                  is EventsListUiEvent.BookmarkOnClick ->
+                                      onEvent(EventsUiEvent.BookmarkOnClick(event.value))
+                                  is EventsListUiEvent.EventItemOnClick ->
+                                      onEvent(EventsUiEvent.EventItemOnClick(event.value))
+                                  else -> {}
+                              }
+                        },
+                    )
                 }
                 else -> {
                     EmptyEvents()
@@ -332,6 +329,8 @@ fun EventsContent(
     }
 }
 
+
+
 @Preview
 @Composable
 fun EventsContentPreview() {
@@ -341,7 +340,8 @@ fun EventsContentPreview() {
                 EventsUiState()
             }
             val eventsList = remember {
-                listOf<EventModel>()
+//                listOf<EventModel>()
+                EventModel.dummyEvents()
             }
             EventsContent(
                 uiState = uiState,

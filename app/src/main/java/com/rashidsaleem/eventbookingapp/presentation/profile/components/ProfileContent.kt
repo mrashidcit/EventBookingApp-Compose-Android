@@ -18,11 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.common.enums.ProfileTypeEnum
+import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.domain.models.home.UserModel
 import com.rashidsaleem.eventbookingapp.domain.models.home.dummyInterests
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileEvent
 import com.rashidsaleem.eventbookingapp.presentation.profile.ProfileUiState
+import com.rashidsaleem.eventbookingapp.presentation.profile.TabItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.profile.components.bottomContainer.BottomContainer
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
@@ -73,6 +75,7 @@ fun ProfileContentPreview() {
 
     val uiState = ProfileUiState(
         user = UserModel(
+            id = 1,
             firstName = "Ashfak",
             lastName = "Sayem",
             pic = "https://raw.githubusercontent.com/mrashidcit/EventBookingApp-Compose-Android/ui/app/src/main/res/drawable/img_going_3.png",
@@ -81,7 +84,9 @@ fun ProfileContentPreview() {
             aboutMe = "Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.",
             interests = dummyInterests()
         ),
-        profileType = ProfileTypeEnum.Organizer,
+        profileType = ProfileTypeEnum.My,
+        selectedTab = TabItemEnum.EVENT,
+        events = EventModel.dummyEvents()
     )
 
     EventBookingAppTheme {
