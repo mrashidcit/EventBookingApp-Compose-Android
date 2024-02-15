@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,3 +43,32 @@ fun AppText(
         textAlign = textAlign,
     )
 }
+
+@Composable
+fun AppText(
+    modifier: Modifier = Modifier,
+    text: AnnotatedString,
+    fontFamily: FontFamily = airbnbCerealFontFamily,
+    fontWeight: FontWeight = FontWeight.Normal,
+    fontSize: TextUnit = TextUnit.Unspecified,
+    color: Color = Color.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines: Int = Int.MAX_VALUE,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    textAlign: TextAlign? = null,
+
+    ) {
+    Text(
+        modifier = modifier,
+        text = text,
+        fontFamily = fontFamily,
+        fontWeight = fontWeight,
+        fontSize = fontSize,
+        color = color,
+        lineHeight = lineHeight,
+        maxLines = maxLines,
+        overflow = overflow,
+        textAlign = textAlign,
+    )
+}
+

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonElevation
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ fun AppButton(
     colors: ButtonColors =  ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     border: BorderStroke? = null,
+    elevation: ButtonElevation? = null,
     onClick: () -> Unit,
 ) {
     Button(
@@ -34,6 +36,7 @@ fun AppButton(
         colors = colors,
         contentPadding = contentPadding,
         border = border,
+        elevation = elevation
     ) {
         AppText(
             text = text,

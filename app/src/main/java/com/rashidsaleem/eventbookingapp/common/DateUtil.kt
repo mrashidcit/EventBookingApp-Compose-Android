@@ -15,6 +15,7 @@ object DateUtil {
     const val EEEECommaHHmma = "EEEE, hh:mma" // Tuesday, 4:00PM - 9:00PM
     const val MMMDashyyyy = "MMM-yyyy" // e.g 14 December, 2024
     const val HHmma = "hh:mma" // 9:00PM
+    const val ECommahhmma = "E,hh:mm a" //Fri 9:00 PM
 
     fun getDay(date: Date?): String? {
         if (date == null) return null
@@ -26,6 +27,25 @@ object DateUtil {
         if (date == null) return null
         val dateFormat: SimpleDateFormat  = SimpleDateFormat("MMM")
         return dateFormat.format(date)
+    }
+
+    fun toStringForNotification(dateInMilliseconds: Long): String? {
+        val date = try {
+            Date(dateInMilliseconds)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+        val calendar = Calendar.getInstance()
+        val diff = dateInMilliseconds - calendar.time.time
+        val seconds = diff / 1000
+        if (seconds < 60) return "Just now"
+        val minutes = seconds / 60
+        if (minutes < 60) return "$minutes min ago"
+        val hours = minutes / 60
+        if (hours < 24) return "$hours hr ago"
+
+        return toString(date, ECommahhmma)
     }
 
     fun toString(dateInMillieseconds: Long, format: String = ddMMMCommayyyy): String? {
