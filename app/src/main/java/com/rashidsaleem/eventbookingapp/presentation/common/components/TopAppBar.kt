@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashidsaleem.eventbookingapp.R
@@ -29,6 +30,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppThe
 
 @Composable
 fun TopAppBar(
+    verticalPadding: Dp = 16.dp,
+    horizontalPadding: Dp = 24.dp,
     contentColor: Color = Color.White,
     text: String = "",
     @DrawableRes leadingIconId: Int? = R.drawable.ic_arrow_left,
@@ -40,7 +43,10 @@ fun TopAppBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 4.dp),
+            .padding(
+                horizontal = horizontalPadding,
+                vertical = verticalPadding,
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (leadingIconId != null) {
