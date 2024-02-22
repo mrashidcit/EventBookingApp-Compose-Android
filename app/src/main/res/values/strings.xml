@@ -88,4 +88,5 @@
     <string name="reject">Reject</string>
     <string name="notification">Notification</string>
     <string name="no_notifications">No Notifications!</string>
+    <string name="successfully_updated">Successfully Updated!</string>
 </resources>

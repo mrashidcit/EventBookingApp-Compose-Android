@@ -190,7 +190,11 @@ fun EventBookingAppNavHost(
                 )
             }
             composable(Routes.notifications) {
-                NotificationsScreen()
+                NotificationsScreen(
+                    navigateBack =  {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(Routes.eventDetail) {
                 val eventJson = navController.previousBackStackEntry

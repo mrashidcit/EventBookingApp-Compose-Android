@@ -44,6 +44,8 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray9
 @Composable
 fun NotificationItem(
     notification: NotificationModel,
+    acceptOnClick: () -> Unit,
+    rejectOnClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -97,7 +99,10 @@ fun NotificationItem(
             )
         }
         if (notification.type == NotificationTypeEnum.Invite) {
-            ButtonsContainer()
+            ButtonsContainer(
+                acceptOnClick = acceptOnClick,
+                rejectOnClick = rejectOnClick
+            )
         }
 
     }
@@ -105,7 +110,10 @@ fun NotificationItem(
 }
 
 @Composable
-private fun ButtonsContainer() {
+private fun ButtonsContainer(
+    acceptOnClick: () -> Unit,
+    rejectOnClick: () -> Unit,
+) {
     Row {
         AppButton(
             text = stringResource(id = R.string.reject),
@@ -124,7 +132,7 @@ private fun ButtonsContainer() {
             )
 
         ) {
-
+            rejectOnClick()
         }
         Spacer(modifier = Modifier.width(13.dp))
         AppButton(
@@ -143,7 +151,7 @@ private fun ButtonsContainer() {
                 horizontal = 20.dp,
             )
         ) {
-
+            acceptOnClick()
         }
     }
 }
@@ -165,7 +173,9 @@ fun NotificationItemPreview() {
                 )
             }
             NotificationItem(
-                notification = notification
+                notification = notification,
+                acceptOnClick = {},
+                rejectOnClick = {}
             )
         }
     }

@@ -25,12 +25,14 @@ import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.NotificationModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
+import com.rashidsaleem.eventbookingapp.presentation.notifications.NotificationsEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 @Composable
 fun NotificationList(
     modifier: Modifier = Modifier,
     notifications: List<NotificationModel>,
+    onEvent: (NotificationsEvent) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -41,7 +43,15 @@ fun NotificationList(
     ) {
 
         items(notifications) { notification ->
-            NotificationItem(notification = notification)
+            NotificationItem(
+                notification = notification,
+                acceptOnClick = {
+                    onEvent(NotificationsEvent.AcceptInvitation(notification))
+                },
+                rejectOnClick = {
+                    onEvent(NotificationsEvent.RejectInvitation(notification))
+                }
+            )
         }
     }
 }
@@ -56,6 +66,9 @@ fun NotificationListPreview() {
             }
             NotificationList(
                 notifications = items,
+                onEvent = {
+
+                }
             )
         }
     }

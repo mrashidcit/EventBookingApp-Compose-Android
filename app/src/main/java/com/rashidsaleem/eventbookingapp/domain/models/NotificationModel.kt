@@ -26,7 +26,7 @@ data class NotificationModel(
 //    }
 
     companion object {
-        fun dummyNotifications(): List<NotificationModel> {
+        fun dummyNotifications(): ArrayList<NotificationModel> {
             val calendar = Calendar.getInstance()
             return arrayListOf(
                 NotificationModel(

@@ -28,13 +28,16 @@ import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.domain.models.NotificationModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.common.components.TopAppBar
+import com.rashidsaleem.eventbookingapp.presentation.notifications.NotificationsEvent
 import com.rashidsaleem.eventbookingapp.presentation.notifications.NotificationsUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray31
 
 @Composable
 fun NotificationsContent(
-    uiState: NotificationsUiState
+    uiState: NotificationsUiState,
+    notifications: List<NotificationModel>,
+    onEvent: (NotificationsEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -57,12 +60,14 @@ fun NotificationsContent(
         )
         Spacer(modifier = Modifier.height(35.dp))
 
-        if (uiState.notifications.isNotEmpty()) {
+        if (notifications.isNotEmpty()) {
             NotificationList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                notifications = uiState.notifications,
+//                notifications = uiState.notifications,
+                notifications = notifications,
+                onEvent = onEvent
             )
         } else {
 
@@ -118,7 +123,13 @@ fun NotificationsContentPreview() {
         Surface(
             color = Color.White,
         ) {
-            NotificationsContent(uiState = uiState)
+            NotificationsContent(
+                uiState = uiState,
+                notifications = NotificationModel.dummyNotifications(),
+                onEvent = {
+
+                }
+                )
         }
     }
 }
