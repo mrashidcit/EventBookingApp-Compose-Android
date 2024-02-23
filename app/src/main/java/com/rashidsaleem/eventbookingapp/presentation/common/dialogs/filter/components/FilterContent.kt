@@ -98,21 +98,6 @@ fun FilterContent(
         }
     }
 
-//    val currentMonth = remember { YearMonth.now() }
-//    val startMonth = remember { currentMonth }
-//    val endMonth = remember { currentMonth.plusMonths(12) }
-//    val today = remember { LocalDate.now() }
-//    var selection by remember { mutableStateOf(DateSelection()) }
-//    val daysOfWeek = remember { daysOfWeek() }
-//
-//
-//    Dialog(onDismissRequest = { /*TODO*/ }) {
-//
-////        datepicker(
-////
-////        )
-//    }
-
     Column(
         modifier = Modifier
 //            .fillMaxWidth()

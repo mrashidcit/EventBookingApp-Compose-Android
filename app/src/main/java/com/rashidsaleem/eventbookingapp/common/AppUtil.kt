@@ -26,5 +26,12 @@ object AppUtil {
         }
     }
 
+    fun followersForDisplay(followers: Int): String {
+        return when {
+            (followers < 1000) -> "$followers"
+            else -> "${followers/1000}K"
+        }
+    }
+
 
 }

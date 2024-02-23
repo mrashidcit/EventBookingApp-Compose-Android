@@ -45,7 +45,7 @@ class EventDetailViewModel @Inject constructor(
             is EventDetailEvent.Bookmark -> bookMark(event.event)
             is EventDetailEvent.BuyTicket -> buyTicket(event.event)
             EventDetailEvent.Follow -> followOrganizer()
-            is EventDetailEvent.Invite -> inviteFriend(event.event)
+            is EventDetailEvent.ShowInviteDialog -> showInviteDialog(event.value)
             EventDetailEvent.NavigateBack -> navigateBack()
             EventDetailEvent.OrganizerProfileDetail -> organizerProfileDetail()
             is EventDetailEvent.PlusGoingPersons -> plusGoingPersons(event.event)
@@ -53,8 +53,12 @@ class EventDetailViewModel @Inject constructor(
     }
 
 
-    private fun inviteFriend(event: EventModel) {
-
+    private fun showInviteDialog(value: Boolean) {
+        _uiState.update {
+            it.copy(
+                showInviteDialog = value
+            )
+        }
     }
 
     private fun followOrganizer() {

@@ -120,7 +120,7 @@ fun TopContainer(
                     shape = RoundedCornerShape(7.dp)
                 )
                 .padding(horizontal = 18.dp, vertical = 6.dp)
-                .clickable { onEvent(EventDetailEvent.Invite(event)) }
+                .clickable { onEvent(EventDetailEvent.ShowInviteDialog(true)) }
             ) {
                 AppText(
                     textResId = R.string.invite,

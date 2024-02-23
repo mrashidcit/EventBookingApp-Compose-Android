@@ -89,4 +89,6 @@
     <string name="notification">Notification</string>
     <string name="no_notifications">No Notifications!</string>
     <string name="successfully_updated">Successfully Updated!</string>
+    <string name="invite_friend">Invite Friend</string>
+    <string name="search">Search</string>
 </resources>
