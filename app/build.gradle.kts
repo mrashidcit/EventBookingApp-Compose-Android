@@ -35,12 +35,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
 //        kotlinCompilerExtensionVersion = "1.4.3"
@@ -70,9 +72,10 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.material3:material3")
+//    implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
@@ -82,6 +85,7 @@ dependencies {
 
     // Material
     implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.compose.material3:material3:1.1.2")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
@@ -102,6 +106,11 @@ dependencies {
 //    kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
+
+    // compose dialog
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    implementation("com.kizitonwose.calendar:compose:2.4.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
 
 }

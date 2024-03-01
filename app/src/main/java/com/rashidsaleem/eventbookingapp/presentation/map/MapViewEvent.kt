@@ -1,7 +1,7 @@
 package com.rashidsaleem.eventbookingapp.presentation.map
 
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
-import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 
 sealed class MapViewEvent {
     data class PerformSearch(val value: String): MapViewEvent()

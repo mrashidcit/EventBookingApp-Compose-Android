@@ -1,18 +1,43 @@
 package com.rashidsaleem.eventbookingapp.presentation.profile
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import android.os.Bundle
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.rashidsaleem.eventbookingapp.common.enums.DataStateEnum
+import com.rashidsaleem.eventbookingapp.presentation.profile.components.ProfileContent
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun ProfileScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = "Profile",
+fun ProfileScreen(
+    params: Bundle? = null,
+    viewModel: ProfileViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    navigateNext: (String, Bundle?) -> Unit,
+    navigateBack: () -> Unit,
+
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = params) {
+        params?.let { viewModel.updateParams(it) }
+        viewModel.initData()
+
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is ProfileViewModel.UiEvent.NavigateNext -> navigateNext(event.route, event.params)
+                ProfileViewModel.UiEvent.NavigateBack -> navigateBack()
+            }
+        }
+
+    }
+
+    if (uiState.userDataState == DataStateEnum.Completed) {
+        ProfileContent(
+            uiState = uiState,
+            onEvent = { event ->
+                viewModel.onEvent(event)
+            }
         )
     }
 }

@@ -26,12 +26,15 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue6
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFamily
 
 @Composable
-fun SearchFilterContainer(
+fun SearchFilterButton(
+    containerColor: Color = Blue6,
+    iconColor: Color = Blue5,
+    textColor: Color = Color.White,
     onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
-            .background(color = Blue6, shape = RoundedCornerShape(50.dp))
+            .background(color = containerColor, shape = RoundedCornerShape(50.dp))
             .clickable { onClick()  }
             .padding(4.dp)
             .padding(end = 4.dp),
@@ -42,7 +45,7 @@ fun SearchFilterContainer(
             modifier = Modifier.size(23.75.dp),
             painter = painterResource(id = R.drawable.ic_filter),
             contentDescription = null,
-            tint = Blue5,
+            tint = iconColor,
         )
         Spacer(Modifier.width(3.7.dp))
         Text(
@@ -50,7 +53,7 @@ fun SearchFilterContainer(
             fontFamily = airbnbCerealFontFamily,
             fontSize = 12.03.sp,
             fontWeight = FontWeight.Normal,
-            color = Color.White,
+            color = textColor,
         )
     }
 }

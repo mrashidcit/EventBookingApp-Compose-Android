@@ -37,9 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
-import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterContainer
+import com.rashidsaleem.eventbookingapp.presentation.common.components.SearchFilterButton
 import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
-import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.home.states.HomeTopContainerUiState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.AtomicTangerine
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue3
@@ -169,9 +169,11 @@ fun TopContainer(
                         color = Color.White.copy(0.30f),
                     )
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = Color.White,
-                    containerColor = Color.Transparent,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                 ),
@@ -199,7 +201,7 @@ fun TopContainer(
                     }
                 },
                 trailingIcon = {
-                    SearchFilterContainer() {
+                    SearchFilterButton() {
                         onEvent(HomeTopContainerEvent.SearchFilterContainerClick(true))
                     }
                 }

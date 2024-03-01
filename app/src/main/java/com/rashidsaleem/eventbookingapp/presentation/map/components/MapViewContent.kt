@@ -21,9 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.components.HorizontalListItemButton
-import com.rashidsaleem.eventbookingapp.presentation.home.HorizontalItemEnum
+import com.rashidsaleem.eventbookingapp.presentation.common.enums.HorizontalItemEnum
 import com.rashidsaleem.eventbookingapp.presentation.map.MapViewEvent
 import com.rashidsaleem.eventbookingapp.presentation.map.MapViewState
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue9

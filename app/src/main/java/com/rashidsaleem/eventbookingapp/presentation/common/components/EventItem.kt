@@ -1,8 +1,7 @@
-package com.rashidsaleem.eventbookingapp.presentation.map.components
+package com.rashidsaleem.eventbookingapp.presentation.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,38 +29,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.rashidsaleem.eventbookingapp.R
-import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Black2
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Blue
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray1
-import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray11
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Gray14
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.Orange1
 
 @Composable
 fun EventItem(
     modifier: Modifier = Modifier,
+    showBookmark: Boolean = true,
+    showEventAddress: Boolean = true,
     bookMarkOnClick: () -> Unit,
     itemOnClick: () -> Unit,
 ) {
-    val configuration = LocalConfiguration.current
 
-    val screenWidth = configuration.screenWidthDp
     Row(
         modifier = modifier
-            .width((screenWidth * 0.85f).dp)
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(16.dp)
             )
             .clip(RoundedCornerShape(16.dp))
             .clickable { itemOnClick() }
-            .zIndex(4f)
+            .zIndex(4f),
 //            .border(
 //                width = 1.dp,
 //                color = Gray11,
 //                shape = RoundedCornerShape(16.dp)
 //            )
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             modifier = Modifier
@@ -85,7 +83,7 @@ fun EventItem(
                     top = 8.dp,
                     bottom = 12.dp,
                     end = 14.89.dp,
-                )
+                ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -96,15 +94,17 @@ fun EventItem(
                     color = Blue,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    modifier = Modifier
-                        .width(16.11.dp)
-                        .height(16.dp)
-                        .clickable { bookMarkOnClick() },
-                    painter = painterResource(id = R.drawable.ic_bookmark),
-                    contentDescription = null,
-                    tint = Orange1,
-                )
+                if (showBookmark) {
+                    Icon(
+                        modifier = Modifier
+                            .width(16.11.dp)
+                            .height(16.dp)
+                            .clickable { bookMarkOnClick() },
+                        painter = painterResource(id = R.drawable.ic_bookmark),
+                        contentDescription = null,
+                        tint = Orange1,
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(4.dp))
             AppText(
@@ -115,22 +115,25 @@ fun EventItem(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    modifier = Modifier.size(14.dp),
-                    painter = painterResource(id = R.drawable.ic_location_on),
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                AppText(
-                    text = "Radius Gallery . Santa Cruz, CA",
-                    fontSize = 13.sp,
-                    color = Gray1,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+            if (showEventAddress) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        modifier = Modifier.size(14.dp),
+                        painter = painterResource(id = R.drawable.ic_location_on),
+                        contentDescription = null,
+    //                    tint = Gray14
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    AppText(
+                        text = "Radius Gallery . Santa Cruz, CA",
+                        fontSize = 13.sp,
+                        color = Gray1,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }
@@ -146,6 +149,8 @@ fun HorizontalEventItem() {
                 .fillMaxWidth()
         ) {
             EventItem(
+                showBookmark = true,
+                showEventAddress = true,
                 bookMarkOnClick = {},
                 itemOnClick = {},
             )

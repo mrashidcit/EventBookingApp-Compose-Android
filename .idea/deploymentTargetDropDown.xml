@@ -2,32 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="EventDetailContentPreview">
+      <entry key="EmptyEventsPreview">
         <State />
       </entry>
-      <entry key="HomeContentPreview">
+      <entry key="FilterContentPreview">
         <State />
       </entry>
-      <entry key="HomeScreenPreview">
+      <entry key="NotificationsContentPreview">
         <State />
       </entry>
-      <entry key="ResetPasswordContentPreview">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="067542515I102377" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-21T03:16:24.557725900Z" />
-        </State>
+      <entry key="ProfileContentPreview">
+        <State />
       </entry>
-      <entry key="TopContainerPreview">
+      <entry key="SelectPriceRangeContainerPreview">
         <State />
       </entry>
       <entry key="app">
