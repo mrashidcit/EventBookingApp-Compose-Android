@@ -1,7 +1,9 @@
 package com.rashidsaleem.eventbookingapp.common
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.rashidsaleem.eventbookingapp.EventApp
@@ -31,6 +33,18 @@ object AppUtil {
             (followers < 1000) -> "$followers"
             else -> "${followers/1000}K"
         }
+    }
+
+    fun shareMessage(title: String, description: String, activity: ComponentActivity) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+//            putExtra(Intent.EXTRA_TITLE, title)
+            putExtra(Intent.EXTRA_TEXT, "$title \n\n $description")
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+         activity.startActivity(shareIntent)
     }
 
 

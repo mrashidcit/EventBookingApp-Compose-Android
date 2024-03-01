@@ -1,6 +1,7 @@
 package com.rashidsaleem.eventbookingapp.presentation.home
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +46,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rashidsaleem.eventbookingapp.R
 import com.rashidsaleem.eventbookingapp.common.AppConstants
+import com.rashidsaleem.eventbookingapp.common.AppUtil
 import com.rashidsaleem.eventbookingapp.domain.models.home.EventModel
 import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogView
 import com.rashidsaleem.eventbookingapp.presentation.common.routes.Routes
@@ -75,12 +78,18 @@ fun HomeScreen(
         skipPartiallyExpanded = false
     )
     val _scope = rememberCoroutineScope()
+    val mContext = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is HomeViewModel.UiEvent.NavigateNext -> navigateNext(event.route, event.params)
                 HomeViewModel.UiEvent.NavigateBack -> navigateBack()
+                is HomeViewModel.UiEvent.ShareInvitation -> AppUtil.shareMessage(
+                    title = event.title,
+                    description = event.description,
+                    activity = mContext as ComponentActivity,
+                )
             }
         }
     }

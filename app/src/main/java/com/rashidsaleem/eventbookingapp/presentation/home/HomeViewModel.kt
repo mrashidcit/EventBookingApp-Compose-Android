@@ -114,8 +114,14 @@ class HomeViewModel: BaseViewModel() {
         _eventFlow.emit(UiEvent.NavigateNext(Routes.map))
     }
 
-    private fun inviteYourFriend() {
+    private fun inviteYourFriend() = _scope.launch {
+        val title = "Invite for Event Booking App"
+        val description = "This is the new event booking app in town which will be useful for you." +
+                "\nApp link: https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically"
 
+        _scope.launch(Dispatchers.Main) {
+            _eventFlow.emit(UiEvent.ShareInvitation(title, description))
+        }
     }
 
     private fun eventCardOnClick(value: EventModel) = _scope.launch(Dispatchers.Main) {
@@ -142,6 +148,7 @@ class HomeViewModel: BaseViewModel() {
     sealed class UiEvent {
         data class NavigateNext(val route: String, val params: Bundle? = null): UiEvent()
         object NavigateBack: UiEvent()
+        data class ShareInvitation(val title: String, val description: String): UiEvent()
     }
 
 }
