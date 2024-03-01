@@ -40,6 +40,7 @@ import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.domain.models.InviteFriendModel
 import com.rashidsaleem.eventbookingapp.domain.models.previewInviteFriends
 import com.rashidsaleem.eventbookingapp.presentation.common.components.AppText
 import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.inviteFriend.InviteFriendEvent
@@ -58,11 +59,10 @@ import com.rashidsaleem.eventbookingapp.presentation.ui.theme.airbnbCerealFontFa
 
 @Composable
 fun InviteFriendContent(
+    uiState: InviteFriendUiState,
+    items: List<InviteFriendModel>,
+    onEvent: (InviteFriendEvent) -> Unit,
 ) {
-
-    val items = remember {
-        previewInviteFriends
-    }
 
     ConstraintLayout(
         modifier = Modifier
@@ -84,7 +84,9 @@ fun InviteFriendContent(
         TopContainer(
             modifier = Modifier.constrainAs(topContainer) {
                 top.linkTo(parent.top)
-            }
+            },
+            uiState = uiState,
+            onEvent = onEvent,
         )
         
         ListComponent(
@@ -98,7 +100,8 @@ fun InviteFriendContent(
             contentPadding = PaddingValues(
                 vertical = 20.dp,
             ),
-            items = items
+            items = items,
+            onEvent = onEvent,
         )
 
         InviteButton(
@@ -112,7 +115,7 @@ fun InviteFriendContent(
                     end.linkTo(parent.end)
                 },
             onClick = {
-
+                onEvent(InviteFriendEvent.Invite)
             }
         )
 
@@ -167,6 +170,8 @@ private fun InviteButton(
 @Composable
 private fun TopContainer(
     modifier: Modifier = Modifier,
+    uiState: InviteFriendUiState,
+    onEvent: (InviteFriendEvent) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -174,16 +179,16 @@ private fun TopContainer(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(12.dp))
-        Box(
-            modifier = Modifier
-                .width(26.dp)
-                .height(5.dp)
-                .background(
-                    color = Gray24.copy(0.50f),
-                    shape = RoundedCornerShape(2.5.dp)
-                )
-        )
-        Spacer(modifier = Modifier.height(17.dp))
+//        Box(
+//            modifier = Modifier
+//                .width(26.dp)
+//                .height(5.dp)
+//                .background(
+//                    color = Gray24.copy(0.50f),
+//                    shape = RoundedCornerShape(2.5.dp)
+//                )
+//        )
+//        Spacer(modifier = Modifier.height(17.dp))
         AppText(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.invite_friend),
@@ -195,8 +200,10 @@ private fun TopContainer(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = { },
+            value = uiState.searchQuery,
+            onValueChange = {
+                onEvent(InviteFriendEvent.UpdateSearchQuery(it))
+            },
             placeholder = {
                 AppText(
                     modifier = Modifier.padding(start = 10.dp),
@@ -231,7 +238,20 @@ private fun TopContainer(
 fun InviteFriendContentPreview() {
     EventBookingAppTheme {
         Surface {
-            InviteFriendContent()
+
+            val uiState = remember {
+                InviteFriendUiState()
+            }
+            val items = remember {
+                previewInviteFriends
+            }
+
+            InviteFriendContent(
+                uiState = uiState,
+                items = items,
+            ) {
+
+            }
         }
     }
 }

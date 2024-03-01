@@ -7,7 +7,19 @@ data class InviteFriendModel(
     val profilePic: String,
     val followers: Int,
     val isSelected: Boolean = false,
-)
+) {
+    fun doesMatchSearchQuery(query: String): Boolean {
+        val matchingCombination = listOf(
+            "$firstName$lastName",
+            "$firstName $lastName",
+            "${firstName.firstOrNull()}${lastName.firstOrNull()}",
+        )
+
+        return matchingCombination.any {
+            it.contains(query, ignoreCase = true)
+        }
+    }
+}
 
 val previewInviteFriends = arrayListOf<InviteFriendModel>(
     InviteFriendModel(

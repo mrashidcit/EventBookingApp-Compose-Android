@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.domain.models.InviteFriendModel
 import com.rashidsaleem.eventbookingapp.domain.models.previewInviteFriends
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.inviteFriend.InviteFriendEvent
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 @Composable
@@ -20,6 +21,7 @@ fun ListComponent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     items: List<InviteFriendModel>,
+    onEvent: (InviteFriendEvent) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -30,7 +32,7 @@ fun ListComponent(
             ListItem(
                 item = item
             ) {
-
+                onEvent(InviteFriendEvent.ItemOnClick(item))
             }
         }
     }
@@ -47,7 +49,9 @@ fun ListComponentPreview() {
             ListComponent(
                 modifier = Modifier.fillMaxSize(),
                 items = items,
-            )
+            ) {
+
+            }
         }
     }
 }

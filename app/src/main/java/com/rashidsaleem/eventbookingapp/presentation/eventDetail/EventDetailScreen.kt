@@ -18,6 +18,7 @@ import androidx.core.os.bundleOf
 import com.rashidsaleem.eventbookingapp.common.AppConstants
 import com.rashidsaleem.eventbookingapp.presentation.common.components.BaseScreen
 import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.filter.FilterDialogView
+import com.rashidsaleem.eventbookingapp.presentation.common.dialogs.inviteFriend.InviteFriendDialogView
 import com.rashidsaleem.eventbookingapp.presentation.eventDetail.components.EventDetailContent
 import com.rashidsaleem.eventbookingapp.presentation.home.events.HomeTopContainerEvent
 import kotlinx.coroutines.flow.collectLatest
@@ -35,7 +36,7 @@ fun EventDetailScreen(
     val baseUiState by viewModel.baseUiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
     val sheetState = androidx.compose.material3.rememberModalBottomSheetState(
-        skipPartiallyExpanded = false
+        skipPartiallyExpanded = true
     )
     val _scope = rememberCoroutineScope()
 
@@ -67,17 +68,15 @@ fun EventDetailScreen(
             sheetState = sheetState
         ) {
             // Sheet content
-            FilterDialogView(
-                showDialog = {
-                    _scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) {
-                            viewModel.onEvent(
-                                EventDetailEvent.ShowInviteDialog(false)
-                            )
-                        }
+            InviteFriendDialogView() {
+                _scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        viewModel.onEvent(
+                            EventDetailEvent.ShowInviteDialog(false)
+                        )
                     }
                 }
-            )
+            }
         }
     }
 

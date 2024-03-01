@@ -63,7 +63,7 @@ object DateUtil {
         return try {
             dateFormat.format(date)
         } catch (ex: Exception) {
-            Log.e(TAG, ex.message, ex)
+//            Log.e(TAG, ex.message, ex)
             null
         }
     }
