@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp.ui.theme
+package com.rashidsaleem.eventbookingapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

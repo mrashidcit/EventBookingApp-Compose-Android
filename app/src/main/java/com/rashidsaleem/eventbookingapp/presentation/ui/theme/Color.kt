@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp.ui.theme
+package com.rashidsaleem.eventbookingapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

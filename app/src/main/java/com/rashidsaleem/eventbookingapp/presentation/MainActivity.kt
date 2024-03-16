@@ -1,4 +1,4 @@
-package com.rashidsaleem.eventbookingapp
+package com.rashidsaleem.eventbookingapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +9,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.rashidsaleem.eventbookingapp.ui.theme.EventBookingAppTheme
+import com.rashidsaleem.eventbookingapp.presentation.splash.SplashScreen
+import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,27 +22,11 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.White
                 ) {
-                    Greeting("Android")
+                    SplashScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EventBookingAppTheme {
-        Greeting("Android")
     }
 }
