@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,12 +15,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rashidsaleem.eventbookingapp.R
+import com.rashidsaleem.eventbookingapp.common.Routes
 import com.rashidsaleem.eventbookingapp.presentation.ui.theme.EventBookingAppTheme
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navigateNext: (String) -> Unit
+) {
+
+    LaunchedEffect(key1 = true) {
+
+        delay(3000L)
+        navigateNext(Routes.onboarding)
+    }
+
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(Color.White)
     ) {
 
@@ -65,7 +78,9 @@ fun SplashScreen() {
 @Composable
 fun SplashScreenPreview() {
     EventBookingAppTheme {
-        SplashScreen()
+        SplashScreen() {
+
+        }
     }
 }
 
